@@ -19,7 +19,7 @@ class OfferController extends BackEndController
             // return $requestArray ; 
             if(isset($requestArray['image']) )
             {
-                $fileName = $this->uploadImage($request );
+                $fileName = $this->uploadImage2($request );
                 // $requestArray['image'] = "شسي";// $fileName;
                 $requestArray['image'] =  $fileName;
             }
