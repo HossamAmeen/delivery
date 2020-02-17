@@ -40,4 +40,4 @@ Route::prefix('admin')->group(function () {
 
     });
 });
-Route::get('/', 'ConfigrationController@index')->name('home');
+Route::get('/', 'Dashboard\ConfigrationController@index')->name('home');
