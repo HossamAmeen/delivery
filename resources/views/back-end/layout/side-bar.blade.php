@@ -98,9 +98,16 @@
             </a>
 
         </li>
+        
         <li class="{{is_active('services')}}">
             <a href="{{route('services.index')}}"  class="{{is_active('services')}}">
                     <i class="far fa-newspaper"></i><span>الخدمات</span>
+            </a>
+
+        </li>
+        <li class="{{is_active('pricelists')}}">
+            <a href="{{route('pricelists.index')}}"  class="{{is_active('pricelists')}}">
+                    <i class="far fa-newspaper"></i><span>قائمه الاسعار</span>
             </a>
 
         </li>

@@ -31,6 +31,7 @@ Route::prefix('admin')->group(function () {
             Route::get('change-status-order/{status}/{orderId}/{deliveryId?}', 'OrderController@changeStatus');
             Route::resource('offers', 'OfferController');
             Route::resource('services', 'ServiceController');
+            Route::resource('pricelists', 'PriceListController');
             Route::resource('attendces', 'AttendceController');
             Route::resource('questions', 'UserController');
             Route::resource('complaints', 'ComplaintController');
