@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Authenticatable
 {
-    use LaratrustUserTrait;
+    // use LaratrustUserTrait;
     use HasApiTokens, Notifiable;
 
     protected $fillable = [ 'name' , 'email' , 'password',
