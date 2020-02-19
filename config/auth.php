@@ -56,14 +56,14 @@ return [
             'provider' => 'clients',
             'hash' => false,
         ],
-        'service-provider' => [
+        'delivery' => [
             'driver' => 'session',
-            'provider' => 'service-providers',
+            'provider' => 'deliveries',
 
         ],
-        'service-provider-api' => [
+        'delivery-api' => [
             'driver' => 'passport',
-            'provider' => 'service-providers',
+            'provider' => 'deliveries',
             'hash' => false,
         ],
     ],

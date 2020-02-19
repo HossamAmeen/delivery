@@ -27,7 +27,7 @@ Route::prefix('admin')->group(function () {
             Route::resource('clients', 'ClientController');
             Route::resource('deliveries', 'DeliveryController');
             Route::resource('orders', 'OrderController');
-            Route::get('show-orders/{status}', 'OrderController@show');
+            Route::get('show-orders/{status}', 'OrderController@show')->name('show-orders');
             Route::get('change-status-order/{status}/{orderId}/{deliveryId?}', 'OrderController@changeStatus');
             Route::resource('offers', 'OfferController');
             Route::resource('services', 'ServiceController');

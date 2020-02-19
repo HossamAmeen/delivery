@@ -45,7 +45,7 @@ class OrderController extends BackEndController
         ));
     }
 
-    public function changeStatus($status , $orderId , $deliveryId)
+    public function changeStatus($status , $orderId , $deliveryId = null)
     {
         $order = Order::find($orderId);
         $order->status = $status;
@@ -63,10 +63,16 @@ class OrderController extends BackEndController
         }
         return redirect()->back();
     }
+    public function destroy($id)
+    {
+        $this->model->FindOrFail($id)->delete();
+        session()->flash('action', 'تم الحذف بنجاح');
+        return redirect()->back();
+    }
     public function store(Request $request)
     {
         $this->model->create($request->all());
-
+        return redirect()->route("show-orders" ,  1);
         return redirect()->route($this->getClassNameFromModel().'.index');
     }
 
@@ -81,6 +87,7 @@ class OrderController extends BackEndController
     {
         $data['deliveries'] = Delivery::orderBy('id', 'DESC')->get();
         $data['clients'] = Client::orderBy('id', 'DESC')->get();
+      
         return  $data ; 
     }
 }
