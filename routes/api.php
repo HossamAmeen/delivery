@@ -8,41 +8,27 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 
-// Route::post('upload/image', 'UploadImageController');
-// Route::namespace('APIs')->group(function () {
-//         Route::group(['middleware' => ['guest:api']], function () {
-//             Route::post('login', 'AuthController@login');
-//             Route::post('signup', 'AuthController@signup');
-//         });
-//         Route::group(['middleware' => 'auth:api'], function() {
-//             Route::get('logout', 'AuthController@logout');
-//             Route::get('getuser', 'AuthController@getUser');
-//         });
 
 
-//     Route::namespace("Website")->group(function () {
-//         Route::post("register" , "ClientController@register");
+
+
+    Route::namespace("APIs")->group(function () {
+           Route::post("register" , "ClientController@register");
 //         Route::put("client/update/profile" , "ClientController@updateProfile");
-//         Route::post("client/login" , "ClientController@login");
-//         Route::get("account" , "ClientController@getAcount");
+           Route::post("client/login" , "ClientController@login");
+           Route::get("account" , "ClientController@getAccount");
 
+           Route::get("cities" , "MobileController@cities");
+           Route::get("price-list" , "MobileController@priceList");
+           Route::get("services" , "MobileController@services");
+           Route::post("complaint" , "MobileController@complaint");
+//       
 
-//         Route::post("complaint" , "HomeController@complaint");
-//         Route::get("categories" , "HomeController@showCategories");
-//         Route::get("sliders" , "HomeController@showSliders");
-//         Route::get("adds" , "HomeController@showAdds");
-//         Route::get("services" , "HomeController@showServices");
-//         Route::get("special/services" , "HomeController@showSpecialServices");
-//         Route::get("bestseller/services" , "HomeController@showBestSellerServices");
-//         Route::get("configration" , "HomeController@getConfigration");
-//         Route::get("countries" , "HomeController@showCountries");
-//         Route::get("cities" , "HomeController@showCities");
-
-//         Route::middleware('auth:client-api')->group(function () {
-//             Route::get("wishlists" , "ClientController@wishlists");
-//             Route::get("cart" , "ClientController@cart");
-//             Route::get("orders" , "ClientController@showOrders");
-//         });
+        Route::middleware('auth:client-api')->group(function () {
+            Route::post("order" , "ClientController@addOrder");
+            Route::post("rate-order/{id}" , "ClientController@addRate");
+            Route::get("client/orders" , "ClientController@showOrders");
+        });
 
 //         Route::post('service-provider/login', 'ServiceProviderController@login');
 //         Route::middleware('auth:service-provider-api')->group(function () {
@@ -56,7 +42,7 @@ use Illuminate\Http\Request;
 //         Route::get('service-category/comments', 'ServiceProviderController@get_service_category_comments');
 
 
-//     });
+    });
 
 // });
 // Route::namespace('Dashboard')->group(function () {

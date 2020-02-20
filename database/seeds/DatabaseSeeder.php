@@ -12,8 +12,33 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         
-       
-      
+        App\Models\Country::create(
+            [
+                'name' => 'مصر',
+               
+            ]
+        );
+        App\Models\City::create(
+            [
+                'name' => 'اسيوط',
+                'country_id' => 1
+            ]
+        );
+
+        App\Models\Service::create(
+            [
+                'name' => 'شراء دواء',
+                'tybe' => 'خدمات توصيل',
+                'is_avaible' => 1
+            ]
+        );
+        
+        App\Models\PriceList::create(
+            [
+                'name' => 'ديلفري',
+               'price' => 1
+            ]
+        );
         $this->call([
             UserSeeder::class,
         //    ClientSeeder::class,
