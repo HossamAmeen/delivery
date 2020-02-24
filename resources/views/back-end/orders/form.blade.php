@@ -57,6 +57,28 @@
          </select>
      </div>
  </div>
+ @php $input = "status"; @endphp
+ <div class="form-group">
+     <label class="col-md-2 control-label">حالة</label>
+     <div class="col-md-4">
+         <select name="{{ $input }}" class="form-control" required>
+
+             <option value="1" 
+             @if(isset($row) && $row->status ==1 )   selected
+              @endif>طلب جديد</option>
+             <option value="2"   @if(isset($row) && $row->status ==2 )   selected
+              @endif>تحت التنفيذ</option>
+             <option value="3"   @if(isset($row) && $row->status ==3 )   selected
+              @endif>تم الانتهاء</option>
+             <option value="4"    @if(isset($row) && $row->status ==4 )   selected
+              @endif>تحت التوصيل</option>
+             <option value="5"   @if(isset($row) && $row->status ==5 )   selected
+              @endif>تم التوصيل</option>
+
+           
+         </select>
+     </div>
+ </div> 
  @php $input = "price"; @endphp
  <div class="form-group">
     <label class="col-lg-2 control-label"> السعر</label>

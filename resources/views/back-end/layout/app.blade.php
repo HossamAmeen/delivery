@@ -57,6 +57,7 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')}}"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')}}"></script>
     <![endif]-->
+    @yield('css')
     @stack('css')
 </head>
 <body class="">
@@ -98,7 +99,7 @@
             <!--Tab navigation end -->
 
             <!--Tab content start-->
-            <div class="tab-content">
+            {{-- <div class="tab-content">
                 <div class="tab-pane active" id="chatTab">
                     <div class="nano">
                         <div class="nano-content">
@@ -269,7 +270,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <!--Tab content -->
         </section>
         <!--Right hidden  section end -->

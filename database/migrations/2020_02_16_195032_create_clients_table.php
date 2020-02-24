@@ -23,6 +23,7 @@ class CreateClientsTable extends Migration
             $table->string('phone2')->nullable();
             $table->string('address');
             $table->string('address2')->nullable();
+            $table->integer('money')->default(0);
             $table->string('job')->nullable();
             $table->boolean('is_block')->default(0);
             $table->string('block_reason')->nullable()->default("he is not good");

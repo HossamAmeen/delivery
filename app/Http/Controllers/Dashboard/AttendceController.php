@@ -14,11 +14,41 @@ class AttendceController extends BackEndController
         $this->model = $model;
     }
 
+
     public function store(Request $request)
     {
 
-        $this->model->create($request->all());
+       $attendance =  $this->model->create($request->all());
+       $delivery = Delivery::find($attendance->delivery_id);
 
+       $attendanceTime = strtotime("+10 minutes", strtotime($delivery->attendance ));
+    //    return date('h:i:s', $attendanceTime);
+    //     return $attendanceTime;
+    //    $selectedTime = "9:15";
+    //    $endTime = strtotime("+15 minutes", strtotime($selectedTime));
+    //    return date('h:i:s', $endTime);
+        if(isset($request->delay_excuse))
+        {
+        $attendance->deduction = 0 ; 
+        $attendance->save();
+        
+        }
+
+       if (date("H:i", time()) > date("H:i", $attendanceTime)    ) {
+         
+            // return "late";
+        if(!isset($request->delay_excuse))
+        {
+            $delivery->deduction += $request->deduction ; 
+            $delivery->save();
+        }
+           
+       }
+      
+       
+    //   return date("Y-m-d H:i:s", time());
+    // return date("Y-m-d H:i:s", $attendanceTime);
+    //    return time();
         return redirect()->route($this->getClassNameFromModel().'.index');
     }
 

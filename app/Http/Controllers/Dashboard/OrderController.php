@@ -52,12 +52,22 @@ class OrderController extends BackEndController
         $order->save();
         if($status == 5)
         {
-            $delivery = Delivery::find($deliveryId);
+            $delivery = Delivery::find($order->delivery_id);
             if(isset($delivery))
             {
-                $delivery->money = $order->delivery_price;
+                // return  ( $order->delivery_price * $delivery->delivery_ratio )  / 100 ; 
+                $delivery->money += ( $order->delivery_price * $delivery->delivery_ratio )  / 100 ;
+                // return $delivery->money ;
                 $delivery->save();
                 // return $delivery;
+            }
+            if($order->price < 0 ){
+                $client = Client::find($order->client_id);
+                if(isset($client))
+                {
+                    $client->money -= $order->price ; 
+                    $client->save();
+                }
             }
                
         }
@@ -78,9 +88,30 @@ class OrderController extends BackEndController
 
     public function update(Request $request, $id)
     {
-      $this->model::find($id)->update($request->all());
-
-        return redirect()->route($this->getClassNameFromModel().'.index');
+     $order =  $this->model::find($id);
+     $order->update($request->all());
+     if($order->status == 5 ){
+        $delivery = Delivery::find($order->delivery_id);
+        if(isset($delivery))
+        {
+            // return  ( $order->delivery_price * $delivery->delivery_ratio )  / 100 ; 
+            $delivery->money += ( $order->delivery_price * $delivery->delivery_ratio )  / 100 ;
+            // return $delivery->money ;
+            $delivery->save();
+            // return $delivery;
+        }
+        if($order->price < 0 ){
+            $client = Client::find($order->client_id);
+            if(isset($client))
+            {
+                $client->money -= $order->price ; 
+                $client->save();
+            }
+        }
+           
+     }
+      return redirect()->route("show-orders" ,  $order->status);
+        
     }
 
     public function append()

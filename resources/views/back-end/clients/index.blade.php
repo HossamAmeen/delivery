@@ -30,6 +30,7 @@
                              <th>الهاتف</th>
                              <th>العنوان</th>
                              <th>الوظيفة</th>
+                             <th>فلوس</th>
                              <th>محظور</th>
                                 <th></th>
                             </tr>
@@ -43,8 +44,14 @@
                                     <td>{{$item->email}}</td>
                                     <td>{{$item->phone}}</td>
                                     <td>{{$item->address}}</td>
+                                  
                                     @if(isset($item->job))
                                     <td>{{$item->job}}</td>
+                                    @else 
+                                    <td>لا يوجد</td>
+                                    @endif
+                                    @if(isset($item->money))
+                                    <td>{{$item->money}}</td>
                                     @else 
                                     <td>لا يوجد</td>
                                     @endif

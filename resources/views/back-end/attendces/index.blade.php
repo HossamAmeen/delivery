@@ -26,8 +26,9 @@
                             <th>#</th>
                             <th> اسم الموظف</th>
                             <th>الحضور</th>
-                                <th>الانصراف</th>
-                               
+                            <th>الانصراف</th>
+                            <th>عذر التأخير</th>
+                            <th>خصم</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -46,7 +47,17 @@
                                     @else 
                                     <td>متاح</td>
                                     @endif
-                                     
+                                    
+                                    @if(isset($item->delay_excuse))
+                                    <td>{{$item->delay_excuse}}</td>
+                                    @else 
+                                    <td>لا يوجد</td>
+                                    @endif
+                                    @if(isset($item->deduction))
+                                    <td>{{$item->deduction}}</td>
+                                    @else 
+                                    <td>لا يوجد</td>
+                                    @endif
                                      <td>
                                         <form action="{{ route($routeName.'.destroy' , ['id' => $item]) }}" method="post">
                                             {{ csrf_field() }}

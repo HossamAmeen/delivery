@@ -70,6 +70,7 @@ class BackEndController extends Controller
     {
         $this->model->FindOrFail($id)->delete();
         session()->flash('action', 'تم الحذف بنجاح');
+        return redirect()->back();
         return redirect()->route($this->getClassNameFromModel() . '.index');
     }
 

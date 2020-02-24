@@ -30,7 +30,7 @@
                              <th>الهاتف</th>
                              <th>العنوان</th>
                              <th>كتبقي الفلوس</th>
-                               
+                             <th>خصومات</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -38,13 +38,18 @@
                             @foreach ($rows as $item)
                                  <tr>
                                     <td> {{$row_num++}}</td>
-                                  
+                                    
                                     <td>{{$item->name}}</td>
                                     <td>{{$item->email}}</td>
                                     <td>{{$item->phone}}</td>
                                     <td>{{$item->address}}</td>
                                     @if(isset($item->money))
                                     <td>{{$item->money}}</td>
+                                    @else 
+                                    <td>0</td>
+                                    @endif
+                                    @if(isset($item->deduction))
+                                    <td>{{$item->deduction}}</td>
                                     @else 
                                     <td>0</td>
                                     @endif

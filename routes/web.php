@@ -35,6 +35,9 @@ Route::prefix('admin')->group(function () {
             Route::resource('attendces', 'AttendceController');
             Route::resource('questions', 'UserController');
             Route::resource('complaints', 'ComplaintController');
+            Route::resource('sanctions', 'SanctionController');
+            Route::resource('accounts', 'AccountController');
+            Route::resource('dailyaccounts', 'DailyAccountController');
 
           
         });

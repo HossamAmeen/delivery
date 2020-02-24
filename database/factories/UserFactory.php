@@ -98,7 +98,7 @@ $factory->define(App\Models\Configration::class, function (Faker $faker) {
 
         'phone' => $faker->e164PhoneNumber,
         'address' => $faker->address,
-        'facebook' => "https://www.facebook.com/UROClinicDrAhmedReda/",
+        'facebook' => "https://www.facebook.com/",
         'twitter' => "https://twitter.com/",
         'instagram' => "https://www.instagram.com/", //
         'youtube' => "https://www.youtube.com",

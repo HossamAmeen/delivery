@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePriceListsTable extends Migration
+class CreateDailyAccountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreatePriceListsTable extends Migration
      */
     public function up()
     {
-        Schema::create('price_lists', function (Blueprint $table) {
+        Schema::create('daily_accounts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->double('price')->default(0);
+            $table->date('date')->default(date('Y-m-d'));
+            $table->double('expenses')->default(0)->nullable();   //// مصروفات
+            $table->string('note')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreatePriceListsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('price_lists');
+        Schema::dropIfExists('daily_accounts');
     }
 }

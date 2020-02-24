@@ -1,8 +1,6 @@
 
  
 @php $input = "delivery_id"; @endphp
-
-
 <div class="form-group">
     <label class="col-md-2 control-label">موظف التوصيل </label>
     <div class="col-md-4">

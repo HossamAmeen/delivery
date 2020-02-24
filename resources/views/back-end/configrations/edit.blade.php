@@ -195,7 +195,7 @@
                                       @enderror
                                 </div>
                             </div>    
-
+{{-- 
 
                             <label class="col-md-2 control-label">من نحن</label><br><br>
                             @php $input = "about_us"; @endphp
@@ -246,7 +246,7 @@
                             <span class="invalid-feedback" role="alert">
                                      <strong>{{ $message }}</strong>
                             </span>
-                            @enderror
+                            @enderror --}}
                             <div class="form-group">
                                 <div class="col-lg-offset-2 col-lg-10">
                                     <button  class="btn btn-primary" type="submit">تحديث</button>

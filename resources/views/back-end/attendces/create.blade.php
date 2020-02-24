@@ -37,14 +37,14 @@
         </div>
     </div>
 
-
+    
     @php $input = "attendance"; @endphp
     <div class="form-group">
         <label class="col-lg-2 control-label">حضور</label>
         <div class="col-lg-4">
             <?php date_default_timezone_set("Africa/Cairo") ?>
             <input type="text" name="{{ $input }}" @if(isset($row)) value="{{$row->$input}}" @else
-                value="{{date('Y-m-d h:i:sa')}}" @endif class="form-control" required readonly>
+                value="{{date('h:ia')}}" @endif class="form-control" required readonly>
             @error($input)
             <div class="alert alert-danger" role="alert" style="text-align: center">
                 <strong>{{ $message }}</strong>
@@ -53,7 +53,33 @@
         </div>
     </div>
 
+    @php $input = "delay_excuse"; @endphp
+    <div class="form-group">
+        <label class="col-lg-2 control-label">عذر للتاخير </label>
+        <div class="col-lg-4">
+            <input type="text" class="form-control" name="{{ $input }}"
+                value="{{ isset($row) ? $row->{$input} : '' }}" />
+            @error($input)
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+    </div>
 
+    @php $input = "deduction"; @endphp
+    <div class="form-group">
+        <label class="col-lg-2 control-label">خصم </label>
+        <div class="col-lg-4">
+            <input type="text" class="form-control" name="{{ $input }}"
+                value="{{ isset($row) ? $row->{$input} : 10 }}" />
+            @error($input)
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+    </div>
 
     <div class="form-group">
         <div class="col-lg-9 col-lg-offset-3">

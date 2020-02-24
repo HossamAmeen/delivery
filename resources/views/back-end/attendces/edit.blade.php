@@ -59,7 +59,7 @@ $pageTitle = "تعديل معاد الحضور والانصراف" ;
         </div>
     </div>
 
-    @php $input = "withdrawal"; @endphp
+    @php $input = "departure"; @endphp
     <div class="form-group">
         <label class="col-lg-2 control-label">انصراف</label>
         <?php date_default_timezone_set("Africa/Cairo") ?>

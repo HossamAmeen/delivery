@@ -1,5 +1,5 @@
 @extends('back-end.layout.app')
-@php $pageTitle = "إضافه موظف توصيل " @endphp  
+@php $pageTitle = "إضافه مصروف اليوم " @endphp  
 @section('title')
     {{ $pageTitle }}
 @endsection
@@ -38,8 +38,6 @@
     <!-- Plugin Css Put Here -->
   
     <link rel="stylesheet" href="{{asset('panel/assets/css/rtl-css/plugins/fileinput-rtl.css')}}">
-    <script src="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
-<link href="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet"/>
 @endpush
 @push('js')
      <!--Upload button Script Start-->
@@ -59,30 +57,4 @@
 <!-- Demo Ck Editor Script For Layout Start-->
 <script src="{{asset('panel/assets/js/pages/editor.js')}}"></script>
 <!-- Demo Ck Editor Script For Layout ENd-->
-<script>
-    var timepicker = new TimePicker('time', {
-      lang: 'en',
-      theme: 'dark'
-    });
-    timepicker.on('change', function(evt) {
-      
-      var value = (evt.hour || '00') + ':' + (evt.minute || '00');
-      evt.element.value = value;
-    
-    });
-    
-    </script>
-    <script>
-        var timepicker2 = new TimePicker('time2', {
-          lang: 'en',
-          theme: 'dark'
-        });
-        timepicker2.on('change', function(evt) {
-          
-          var value = (evt.hour || '00') + ':' + (evt.minute || '00');
-          evt.element.value = value;
-        
-        });
-        
-        </script>
 @endpush

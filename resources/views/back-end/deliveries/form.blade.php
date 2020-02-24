@@ -111,6 +111,48 @@
     </div>
 </div>
 
+
+
+{{-- @php $input = "begin"; @endphp
+<div class="form-group">
+    <label class="col-lg-3 control-label">معد الحضور</label>
+    <div class="col-lg-6">
+        <input type="time"  class="form-control" name="{{ $input }}" value="{{isset($row) ? $row->{$input} : ''}}" />
+        @error($input)
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
+</div> --}}
+
+@php $input = "attendance"; @endphp
+<div class="form-group">
+    <label class="col-lg-3 control-label">معد الحضور</label>
+    <div class="col-lg-6">
+        {{-- <input type="time"  class="form-control" name="{{ $input }}" value="{{isset($row) ? date("H:i", strtotime($row->{$input}))  : ''}}" /> --}}
+        <input type="time"  class="form-control" name="{{ $input }}" value="{{isset($row) ? $row->{$input} : ''}}" />
+        @error($input)
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
+</div>
+
+@php $input = "departure"; @endphp
+<div class="form-group">
+    <label class="col-lg-3 control-label">معاد الانصراف </label>
+    <div class="col-lg-6">
+        <input type="time"  class="form-control" name="{{ $input }}" value="{{isset($row) ? $row->{$input} : ''}}" />
+        @error($input)
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
+</div>
+
 {{-- @php $input = "city_id"; @endphp
 <div class="form-group">
     <label class="col-lg-3 control-label">المدينه </label>
@@ -123,3 +165,6 @@
         @enderror
     </div>
 </div> --}}
+
+
+

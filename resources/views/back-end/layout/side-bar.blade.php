@@ -28,11 +28,11 @@
     <!--Left navigation start-->
  <!--Left navigation start-->
     <ul class="mainNav">
-        {{-- <li >
+        <li >
             <a href="{{route('configrations.edit' , ['id' => '1'])}}" class="{{is_active('configrations')}}">
                     <i class="fas fa-edit"></i><span>تعديل بيانات الموقع</span>
             </a>
-        </li> --}}
+        </li>
 
         @if( Auth::user()->role == 1 )
         <li>
@@ -116,14 +116,32 @@
                     <i class="far fa-newspaper"></i><span>الحضور</span>
             </a>
         </li>
+        
         <li class="{{is_active('complaints')}}">
             <a href="{{route('complaints.index')}}"  class="{{is_active('complaints')}}">
                     <i class="far fa-newspaper"></i><span>الشكاوي</span>
             </a>
 
         </li>
+        <li class="{{is_active('sanctions')}}">
+            <a href="{{route('sanctions.index')}}"  class="{{is_active('sanctions')}}">
+                    <i class="far fa-newspaper"></i><span>الخصومات</span>
+            </a>
 
-       
+        </li>
+
+        <li class="{{is_active('accounts')}}">
+            <a href="{{route('accounts.index')}}"  class="{{is_active('accounts')}}">
+                    <i class="far fa-newspaper"></i><span>الحسابات </span>
+            </a>
+
+        </li>
+        <li class="{{is_active('dailyaccounts')}}">
+            <a href="{{route('dailyaccounts.index')}}"  class="{{is_active('dailyaccounts')}}">
+                    <i class="far fa-newspaper"></i><span>المصروفات اليومية</span>
+            </a>
+
+        </li>
        
         {{-- <li class="{{is_active('questions')}}">
             <a href="{{route('questions.index')}}"  class="{{is_active('questions')}}">

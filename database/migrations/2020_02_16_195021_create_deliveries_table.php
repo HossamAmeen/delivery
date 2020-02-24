@@ -19,13 +19,16 @@ class CreateDeliveriesTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('password');
+            $table->double('delivery_ratio')->default(2);
             $table->string('phone');
             $table->string('phone2')->nullable();
             $table->string('address');
             $table->string('address2')->nullable();
+            $table->time('attendance'); /// حضور
+            $table->time('departure');  //// انصراف
             $table->boolean('is_free')->default(0);
-            $table->integer('money')->default(0)->nullable();
-
+            $table->double('money')->default(0)->nullable();
+            $table->double('deduction')->default(0)->nullable();
             $table->bigInteger('city_id')->unsigned()->nullable();
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
 
