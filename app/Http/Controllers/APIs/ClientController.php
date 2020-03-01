@@ -38,6 +38,7 @@ class ClientController extends Controller
         }
         $client = Client::where("phone", request('phone'))->first();
         $success['token'] =  $client->createToken('token')->accessToken;
+        return $this->APIResponse($success, null, 200);
         return response()->json($success, 200);
 
     }
@@ -46,6 +47,12 @@ class ClientController extends Controller
     {
         $client = Client::findOrFail(Auth::guard('client-api')->user()->id);
         return $this->APIResponse($client, null, 201);
+    }
+    public function updateAccount(Request $request)
+    {
+        Client::find(Auth::guard('client-api')->user()->id)->update($request->all());
+        return $this->APIResponse(null, null, 201);
+
     }
     public function showOrders()
     {

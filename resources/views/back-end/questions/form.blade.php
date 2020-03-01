@@ -1,7 +1,5 @@
 
 @php $input = "category_question_id"; @endphp
-
-
 <div class="form-group">
     <label class="col-md-3 control-label">فئة السؤال </label>
     <div class="col-md-6">
