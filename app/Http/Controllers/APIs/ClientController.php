@@ -38,6 +38,7 @@ class ClientController extends Controller
         }
         $client = Client::where("phone", request('phone'))->first();
         auth()->login($client);
+      //  return Auth::guard('client')->user()->id;
         $success['token'] =  $client->createToken('token')->accessToken;
         return $this->APIResponse($success, null, 200);
         return response()->json($success, 200);
