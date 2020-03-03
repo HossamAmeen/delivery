@@ -25,4 +25,9 @@ class MobileController extends Controller
     {
         return $this->APIResponse(City::all(), null, 201);
     }
+    public function showOffers()
+    {
+        return $this->APIResponse(\App\Models\Offer::all(), null, 201);
+        
+    }
 }

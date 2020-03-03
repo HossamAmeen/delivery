@@ -11,6 +11,7 @@ Route::namespace ("APIs")->group(function () {
     Route::get("cities", "MobileController@cities");
     Route::get("price-list", "MobileController@priceList");
     Route::get("services", "MobileController@services");
+    Route::get("offers", "MobileController@showOffers");
     Route::post("complaint", "MobileController@complaint");
 //
 
@@ -18,6 +19,7 @@ Route::namespace ("APIs")->group(function () {
     Route::post("order", "ClientController@addOrder");
     Route::post("rate-order/{id}", "ClientController@addRate");
     Route::get("client/orders", "ClientController@showOrders");
+    Route::put("account/update", "ClientController@updateAccount");
     });
     // Route::middleware('auth:client')->group(function () {
     //     Route::post("order-testM" , "ClientController@addOrder");
