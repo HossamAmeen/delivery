@@ -45,6 +45,23 @@ class ClientController extends Controller
 
     }
 
+    public function loginStudy(){ 
+        $credentials = request(['phone', 'password']);
+
+        if(Auth::attempt($credentials, false, false)){
+            $user = Auth::user(); 
+            // return $user;
+            $success['token'] =  $user->createToken('token')-> accessToken; 
+            return $this->APIResponse($success, null, 200);
+            // return response()->json(['success' => $success], $this-> successStatus); 
+        } 
+        else{ 
+            // $client = Client::where("phone", request('phone'))->first();
+            // return $client;
+            return response()->json(['error'=>'Unauthorised'], 401); 
+        } 
+    }
+
     public function getAccount()
     {
         $client = Client::findOrFail(Auth::guard('client-api')->user()->id);
