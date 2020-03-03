@@ -14,11 +14,11 @@ Route::namespace ("APIs")->group(function () {
     Route::post("complaint", "MobileController@complaint");
 //
 
-    // Route::middleware('auth:client-api')->group(function () {
+    Route::middleware('auth:client-api')->group(function () {
     Route::post("order", "ClientController@addOrder");
     Route::post("rate-order/{id}", "ClientController@addRate");
     Route::get("client/orders", "ClientController@showOrders");
-    // });
+    });
     // Route::middleware('auth:client')->group(function () {
     //     Route::post("order-testM" , "ClientController@addOrder");
     //     Route::post("rate-order/{id}" , "ClientController@addRate");
