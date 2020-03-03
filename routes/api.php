@@ -24,11 +24,16 @@ use Illuminate\Http\Request;
            Route::post("complaint" , "MobileController@complaint");
 //       
 
-        Route::middleware('auth:client-api')->group(function () {
+        // Route::middleware('auth:client-api')->group(function () {
             Route::post("order" , "ClientController@addOrder");
             Route::post("rate-order/{id}" , "ClientController@addRate");
             Route::get("client/orders" , "ClientController@showOrders");
-        });
+        // });
+        // Route::middleware('auth:client')->group(function () {
+        //     Route::post("order-testM" , "ClientController@addOrder");
+        //     Route::post("rate-order/{id}" , "ClientController@addRate");
+        //     Route::get("client/orders" , "ClientController@showOrders");
+        // });
         Route::post("rate-order-test/{id}" , "ClientController@addRate");
 //         Route::post('service-provider/login', 'ServiceProviderController@login');
 //         Route::middleware('auth:service-provider-api')->group(function () {

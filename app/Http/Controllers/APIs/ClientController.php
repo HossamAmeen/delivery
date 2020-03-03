@@ -24,7 +24,7 @@ class ClientController extends Controller
         auth()->login($client);
         $success['token'] =  $client->createToken('token')->accessToken;
 
-       
+        return $this->APIResponse($success, null, 200);
         return response()->json($success, 200);
     }
 
@@ -37,6 +37,7 @@ class ClientController extends Controller
             return $this->APIResponse(null, $error, 400);
         }
         $client = Client::where("phone", request('phone'))->first();
+        auth()->login($client);
         $success['token'] =  $client->createToken('token')->accessToken;
         return $this->APIResponse($success, null, 200);
         return response()->json($success, 200);
