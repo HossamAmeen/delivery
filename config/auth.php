@@ -94,9 +94,9 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Client::class,
         ],
-        'service-providers' => [
+        'deliveries' => [
             'driver' => 'eloquent',
-            'model' => App\Models\ServiceProvider::class,
+            'model' => App\Models\Delivery::class,
         ],
         // 'users' => [
         //     'driver' => 'database',
