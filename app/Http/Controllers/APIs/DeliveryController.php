@@ -27,7 +27,18 @@ class DeliveryController extends Controller
     public function orders()
     {
         $orders = Order::where('delivery_id' , Auth::guard('delivery-api')->user()->id)
+        ->orderBy('id', 'DESC')
         ->get();
+
+        return $this->APIResponse($orders, null, 201);
+    }
+    public function lastOrder()
+    {
+        $orders = Order::latest()
+        ->where('delivery_id' , Auth::guard('delivery-api')->user()->id)
+        ->orderBy('id', 'DESC')
+        ->first();
+        
 
         return $this->APIResponse($orders, null, 201);
     }

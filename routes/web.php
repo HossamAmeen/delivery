@@ -21,7 +21,7 @@ Route::prefix('admin')->group(function () {
         // Route::post('login', 'BackEnd\UserController@login');
         Route::middleware('auth')->group(function () {
 
-            Route::get('/', 'ConfigrationController@index');
+            Route::get('/', 'UserController@index');
             Route::resource('configrations', 'ConfigrationController');
             Route::resource('users', 'UserController');
             Route::resource('clients', 'ClientController');

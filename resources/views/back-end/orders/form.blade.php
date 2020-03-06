@@ -46,7 +46,8 @@
  <div class="form-group">
      <label class="col-md-2 control-label">موظف التوصيل </label>
      <div class="col-md-4">
-         <select name="{{ $input }}" class="form-control" required>
+         <select name="{{ $input }}" class="form-control">
+          <option value="{{null}}"></option>
              @foreach ($deliveries as $delivery)
              <option value="{{$delivery->id}}" @if(isset($row)) @if( $row->delivery_id == $delivery->id )
                  selected

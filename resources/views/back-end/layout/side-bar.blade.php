@@ -29,9 +29,9 @@
  <!--Left navigation start-->
     <ul class="mainNav">
         <li >
-            <a href="{{route('configrations.edit' , ['id' => '1'])}}" class="{{is_active('configrations')}}">
+            {{-- <a href="{{route('configrations.edit' , ['id' => '1'])}}" class="{{is_active('configrations')}}">
                     <i class="fas fa-edit"></i><span>تعديل بيانات الموقع</span>
-            </a>
+            </a> --}}
         </li>
 
         @if( Auth::user()->role == 1 )
