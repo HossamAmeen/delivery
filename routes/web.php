@@ -45,3 +45,4 @@ Route::prefix('admin')->group(function () {
     });
 });
 Route::get('/', 'Dashboard\ConfigrationController@index')->name('home');
+Route::get('firebase','FirebaseController@index');
