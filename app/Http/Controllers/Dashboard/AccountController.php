@@ -8,6 +8,7 @@ use App\Models\Account;
 
 class AccountController extends BackEndController
 {
+    //////////// حساب اليوم 
     public function __construct(Account $model)
     {
         $this->model = $model;
@@ -16,13 +17,21 @@ class AccountController extends BackEndController
     public function store(Request $request)
     {
        $accountToday = Account::where('date' , date('Y-m-d'))->first();
+       
        if(isset($accountToday))
        {
+           
         $accountToday->expenses = $request->expenses ; 
         $accountToday->save();
        }
        else
+       {
+        // return $accountToday;
+        $request['date'] = date('Y-m-d') ; 
+        // return $request->all() ;
         $this->model->create($request->all());
+       }
+        
 
         return redirect()->route($this->getClassNameFromModel().'.index');
     }

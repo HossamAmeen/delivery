@@ -26,8 +26,20 @@
                     >  
                     @csrf
                     {{method_field('PUT')}}
-                @include('back-end.'.$folderName.'.form')    
-              
+                @include('back-end.'.$folderName.'.form')  
+                  
+                @php $input = "date"; @endphp
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">تاريخ</label>
+                    <div class="col-lg-2">
+                        <input type="date" class="form-control" name="{{ $input }}" value="{{ isset($row) ? $row->{$input} : '' }}" />
+                        @error($input)
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                </div>
                 <div class="form-group">
                         <div class="col-lg-9 col-lg-offset-3">
                             <button type="submit" class="btn btn-primary" onclick="myFunction()">تعديل</button>

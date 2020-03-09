@@ -18,6 +18,7 @@
                 enctype="multipart/form-data"
                 >  
                 @csrf
+                
                 @include('back-end.'.$folderName.'.form')  
                 <div class="form-group">
                         <div class="col-lg-9 col-lg-offset-3">

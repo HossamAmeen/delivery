@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Dashboard;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\DailyAccount;
-
+use App\Models\Account;
 class DailyAccountController extends BackEndController
 {
+    //////////// المصروفات في اليوم
     public function __construct(DailyAccount $model)
     {
         $this->model = $model;
@@ -17,7 +18,9 @@ class DailyAccountController extends BackEndController
     {
        
         $this->model->create($request->all());
-
+        $accountToday = Account::where('date' , date('Y-m-d'))->first();
+        $accountToday->expenses =  $accountToday->expenses - $request->expenses;
+        $accountToday->save();
         return redirect()->route($this->getClassNameFromModel().'.index');
     }
 

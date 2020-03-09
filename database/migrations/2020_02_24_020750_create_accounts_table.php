@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-
+// use DB;
 class CreateAccountsTable extends Migration
 {
     /**
@@ -15,7 +15,7 @@ class CreateAccountsTable extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->date('date')->default(date('Y-m-d'));
+            $table->date('date');
             $table->double('expenses');   //// مصروفات
             $table->timestamps();
         });
