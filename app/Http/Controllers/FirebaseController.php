@@ -31,7 +31,7 @@ class FirebaseController extends Controller
         $reference = $database->getReference('/deliveries');
 
         $snapshot = $reference->getSnapshot()->getValue();
-       return  $snapshot;
+    //    return  $snapshot;
         $ids =   $database->getReference('/deliveries')->getChildKeys();
 
         // return  $database->getReference('/deliveries')->getChildKeys();
