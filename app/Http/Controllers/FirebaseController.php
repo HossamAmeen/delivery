@@ -37,7 +37,7 @@ class FirebaseController extends Controller
         // return  $database->getReference('/deliveries')->getChildKeys();
        
         $database->getReference('deliveries')->remove();
-        $$snapshot[$id] = $id2;
+        $snapshot[$id] = $id2;
         $newPost = $database
         ->getReference('/deliveries')
         ->set($snapshot);
