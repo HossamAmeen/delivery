@@ -26,7 +26,7 @@ class FirebaseController extends Controller
         $database = $firebase->getDatabase();
 
         $newPost = $database
-        // ->getReference('blog/posts')
+        ->getReference('/')
         ->push([
             $id => $id2 ,
        
