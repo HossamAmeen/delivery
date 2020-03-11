@@ -25,12 +25,18 @@ class FirebaseController extends Controller
 
         $database = $firebase->getDatabase();
 
+      
+       
+        return  $database
+        ->getReference('/users')->getChildKeys();
+
+        
         $newPost = $database
         ->getReference('/users')
         ->set([
             $id => $id2
         ]);
-       return  $newPost->getChild();
+       
         // return $database->getChild() ;
         $newPost = $database
         ->getReference('/')
