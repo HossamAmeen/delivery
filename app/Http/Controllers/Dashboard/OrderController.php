@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Delivery;
 use App\Models\Client;
-
+use Kreait\Firebase;
+use Kreait\Firebase\Factory;
+use Kreait\Firebase\ServiceAccount;
 class OrderController extends BackEndController
 {
     public function __construct(Order $model)
@@ -82,6 +84,9 @@ class OrderController extends BackEndController
     public function store(Request $request)
     {
         $this->model->create($request->all());
+        if(isset($request->delivery_id)){
+            $this->sendToFirebase($request->delivery_id);
+        }
         return redirect()->route("show-orders" ,  1);
         return redirect()->route($this->getClassNameFromModel().'.index');
     }
@@ -90,6 +95,9 @@ class OrderController extends BackEndController
     {
      $order =  $this->model::find($id);
      $order->update($request->all());
+     if(isset($request->delivery_id)){
+        $this->sendToFirebase($request->delivery_id);
+    }
      if($order->status == 5 ){
         $delivery = Delivery::find($order->delivery_id);
         if(isset($delivery))
@@ -120,5 +128,44 @@ class OrderController extends BackEndController
         $data['clients'] = Client::orderBy('id', 'DESC')->get();
       
         return  $data ; 
+    }
+
+    public function sendToFirebase($deliveryId)
+    {
+          // return __DIR__ ;
+          $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/delivery-e3e58-firebase-adminsdk-imo2m-b7f0400810.json');
+          $firebase = (new Factory)
+          ->withServiceAccount($serviceAccount)
+          ->withDatabaseUri('https://delivery-e3e58.firebaseio.com/')
+          ->create();
+  
+          $database = $firebase->getDatabase();
+  
+          // $database->getReference('/deliveries') // this is the root reference
+          // ->update(['1' => 55 ]);
+  
+          $reference = $database->getReference('/deliveries');
+  
+          $snapshot = $reference->getSnapshot()->getValue();
+      //    return  $snapshot;
+          // $ids =   $database->getReference('/deliveries')->getChildKeys();
+  
+          // return  $database->getReference('/deliveries')->getChildKeys();
+         
+          // $database->getReference('deliveries')->remove();
+          $snapshot[$deliveryId] = 1;
+          $newPost = $database
+          ->getReference('/deliveries')
+          ->update($snapshot);
+         
+          // return $database->getChild() ;
+          // $newPost = $database
+          // ->getReference('/')
+          // ->push([
+          //     $id => $id2
+          // ]);
+         
+        //   echo '<pre>';
+        //   print_r($newPost->getvalue() );
     }
 }
