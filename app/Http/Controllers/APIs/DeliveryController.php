@@ -39,6 +39,7 @@ class DeliveryController extends Controller
     {
         $orders = Order::latest()
         ->where('delivery_id' , Auth::guard('delivery-api')->user()->id)
+        ->with('client')
         ->orderBy('id', 'DESC')
         ->first();
         
