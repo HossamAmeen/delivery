@@ -35,6 +35,7 @@ class FirebaseController extends Controller
         ->push([
             $id => $id2
         ]);
+        return $database->getValue() ;
         echo '<pre>';
         print_r($newPost->getvalue() , $database->getValue());
     }
