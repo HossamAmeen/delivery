@@ -27,7 +27,10 @@ class FirebaseController extends Controller
 
         $newPost = $database
         ->getReference('/')
-        ->push($id => $id2);
+        ->push([
+            $id => $id2 ,
+       
+        ]);
         echo '<pre>';
         print_r($newPost->getvalue());
     }
