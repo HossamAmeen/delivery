@@ -27,25 +27,23 @@ class FirebaseController extends Controller
 
       
        
-        return  $database
-        ->getReference('/users')->getChildKeys();
+        $ids =   $database
+        ->getReference('/deliveries')->getChildKeys();
 
-        
+        $ids[$id] = $id2;
         $newPost = $database
-        ->getReference('/users')
-        ->set([
-            $id => $id2
-        ]);
+        ->getReference('/deliveries')
+        ->set($ids);
        
         // return $database->getChild() ;
-        $newPost = $database
-        ->getReference('/')
-        ->push([
-            $id => $id2
-        ]);
+        // $newPost = $database
+        // ->getReference('/')
+        // ->push([
+        //     $id => $id2
+        // ]);
        
         echo '<pre>';
-        print_r($newPost->getvalue() , $database->getValue());
+        print_r($newPost->getvalue() );
     }
 
 }
