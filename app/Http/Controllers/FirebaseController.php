@@ -30,7 +30,7 @@ class FirebaseController extends Controller
         ->set([
             $id => $id2
         ]);
-        return $firebase->getSnapshot() ;
+        return $firebase->getChild() ;
         $newPost = $database
         ->getReference('/')
         ->push([
