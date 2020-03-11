@@ -36,7 +36,7 @@ class FirebaseController extends Controller
             $id => $id2
         ]);
         echo '<pre>';
-        print_r($newPost->getvalue());
+        print_r($newPost->getvalue() , $value = $reference->getValue());
     }
 
 }
