@@ -25,9 +25,13 @@ class FirebaseController extends Controller
 
         $database = $firebase->getDatabase();
 
-        $database->getReference('/deliveries') // this is the root reference
-        ->update(['1' => 55 ]);
-       return ;
+        // $database->getReference('/deliveries') // this is the root reference
+        // ->update(['1' => 55 ]);
+
+        $reference = $database->getReference('/deliveries');
+
+        $snapshot = $reference->getSnapshot()->getValue();
+       return  $snapshot;
         $ids =   $database->getReference('/deliveries')->getChildKeys();
 
         return  $database->getReference('/deliveries')->getChildKeys();
