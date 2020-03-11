@@ -24,14 +24,17 @@ class DeliveryController extends Controller
         $success['token'] =  $delivery->createToken('token')->accessToken;
         return $this->APIResponse($success, null, 200);
     }
+
     public function orders()
     {
         $orders = Order::where('delivery_id' , Auth::guard('delivery-api')->user()->id)
+        ->with('client')
         ->orderBy('id', 'DESC')
         ->get();
 
         return $this->APIResponse($orders, null, 201);
     }
+
     public function lastOrder()
     {
         $orders = Order::latest()
@@ -41,5 +44,38 @@ class DeliveryController extends Controller
         
 
         return $this->APIResponse($orders, null, 201);
+    }
+
+    public function changeStatus($orderId)
+    {
+        $order = Order::find($orderId);
+
+        if(isset($order)){
+
+            $order->status = 5;
+            $order->save();
+
+            $delivery = Delivery::find($order->delivery_id);
+            if(isset($delivery))
+            {
+                // return  ( $order->delivery_price * $delivery->delivery_ratio )  / 100 ; 
+                $delivery->money += ( $order->delivery_price * $delivery->delivery_ratio )  / 100 ;
+                // return $delivery->money ;
+                $delivery->save();
+                // return $delivery;
+            }
+            if($order->price < 0 ){
+                $client = Client::find($order->client_id);
+                if(isset($client))
+                {
+                    $client->money -= $order->price ; 
+                    $client->save();
+                }
+            }
+            return $this->APIResponse(null, null, 201);
+        }
+        return $this->APIResponse(null, "not found this order", 201);
+
+       
     }
 }
