@@ -42,8 +42,9 @@
                                     <td>لا يوجد</td>
                                     @endif
                                     <td>{{$item->attendance}}</td>
-                                    @if(isset($item->withdrawal))
-                                    <td>{{$item->withdrawal}}</td>
+                                 
+                                    @if($item->departure !== "02:00")
+                                    <td>{{$item->departure}}</td>
                                     @else 
                                     <td>متاح</td>
                                     @endif

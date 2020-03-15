@@ -17,10 +17,10 @@ class AttendceController extends BackEndController
 
     public function store(Request $request)
     {
-
+        // return $request->all();
        $attendance =  $this->model->create($request->all());
        $delivery = Delivery::find($attendance->delivery_id);
-
+        // return $attendance ;
        $attendanceTime = strtotime("+10 minutes", strtotime($delivery->attendance ));
     //    return date('h:i:s', $attendanceTime);
     //     return $attendanceTime;
@@ -49,6 +49,7 @@ class AttendceController extends BackEndController
     //   return date("Y-m-d H:i:s", time());
     // return date("Y-m-d H:i:s", $attendanceTime);
     //    return time();
+    // return $attendance ;
         return redirect()->route($this->getClassNameFromModel().'.index');
     }
 
@@ -56,6 +57,7 @@ class AttendceController extends BackEndController
     {
       $item = $this->model::find($id);
       $item->update($request->all());
+    //   return $item;
       if(isset($request->is_recieved))
       {
         $delivery = Delivery::find($request->delivery_id);
