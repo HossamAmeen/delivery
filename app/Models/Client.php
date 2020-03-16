@@ -22,4 +22,11 @@ class Client extends Authenticatable
         'password',
     ];
 
+    public function setMoneyAttribute($value)
+    {
+        if($value === null )
+        
+        $this->attributes['money'] =  0 ;
+        else $value;
+    }
 }
