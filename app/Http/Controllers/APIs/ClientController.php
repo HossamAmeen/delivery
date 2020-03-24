@@ -28,8 +28,31 @@ class ClientController extends Controller
         return response()->json($success, 200);
     }
 
-    public function login()
+    public function login(Request $request)
     {
+        $field = 'phone';
+
+        if (is_numeric($request->input('phone') )  ){
+            $field = 'phone' ;
+        } elseif (filter_var($request->input('phone'), FILTER_VALIDATE_EMAIL)) {
+            $field = 'email';
+        }
+        
+        $request->merge([$field => $request->input('phone')]);
+        
+        if (!Auth::guard('client')->attempt($request->only($field, 'password'))) {
+            $error = "Unauthorized";
+            return $this->APIResponse(null, $error, 400);
+        }
+        $client = Client::where($field, request('phone'))->first();
+       
+        $success['token'] =  $client->createToken('token')->accessToken;
+        return $this->APIResponse($success, null, 200);
+      
+
+    }
+
+    public function loginStudy(Request $request){ 
         $credentials = request(['phone', 'password']);
 
         if(!Auth::guard('client')->attempt($credentials, false, false)){
@@ -42,24 +65,6 @@ class ClientController extends Controller
         $success['token'] =  $client->createToken('token')->accessToken;
         return $this->APIResponse($success, null, 200);
         return response()->json($success, 200);
-
-    }
-
-    public function loginStudy(){ 
-        $credentials = request(['phone', 'password']);
-
-        if(Auth::attempt($credentials, false, false)){
-            $user = Auth::user(); 
-            // return $user;
-            $success['token'] =  $user->createToken('token')-> accessToken; 
-            return $this->APIResponse($success, null, 200);
-            // return response()->json(['success' => $success], $this-> successStatus); 
-        } 
-        else{ 
-            // $client = Client::where("phone", request('phone'))->first();
-            // return $client;
-            return response()->json(['error'=>'Unauthorised'], 401); 
-        } 
     }
 
     public function getAccount()
