@@ -51,6 +51,11 @@ class AttendceController extends BackEndController
         }
            
        }
+       else
+       {
+        $attendance->deduction = 0 ; 
+        $attendance->save();
+       }
       
         return redirect()->route($this->getClassNameFromModel().'.index');
     }
@@ -63,7 +68,7 @@ class AttendceController extends BackEndController
       if(isset($request->is_recieved))
       {
         $delivery = Delivery::find($request->delivery_id);
-        $delivery->money += 10 ;
+        $delivery->daily_money += 10 ;
         $delivery->save(); 
         
       }

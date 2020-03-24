@@ -61,6 +61,8 @@ class OrderController extends BackEndController
                 $delivery->money += ( $order->delivery_price * $delivery->delivery_ratio )  / 100 ;
                 // return $delivery->money ;
                 $delivery->save();
+                $order->delivery_ratio=( $order->delivery_price * $delivery->delivery_ratio )  / 100 ;
+                $order->save();
                 // return $delivery;
             }
             if($order->price < 0 ){
@@ -83,11 +85,34 @@ class OrderController extends BackEndController
     }
     public function store(Request $request)
     {
-        $this->model->create($request->all());
+       $order =  $this->model->create($request->all());
         if(isset($request->delivery_id)){
-            $this->sendToFirebase($request->delivery_id);
+            // $this->sendToFirebase($request->delivery_id);
         }
-        return redirect()->route("show-orders" ,  1);
+        if($order->status == 5 ){
+            $delivery = Delivery::find($order->delivery_id);
+            if(isset($delivery))
+            {
+                
+                // return  ( $order->delivery_price * $delivery->delivery_ratio )  / 100 ; 
+                $delivery->money += ( $order->delivery_price * $delivery->delivery_ratio )  / 100 ;
+                // return $delivery->money ;
+                $delivery->save();
+                $order->delivery_ratio= ( $order->delivery_price * $delivery->delivery_ratio )  / 100;
+                $order->save();
+                // return $delivery;
+            }
+            if($order->price < 0 ){
+                $client = Client::find($order->client_id);
+                if(isset($client))
+                {
+                    $client->money -= $order->price ; 
+                    $client->save();
+                }
+            }
+               
+         }
+        return redirect()->route("show-orders" ,  $order->status);
         return redirect()->route($this->getClassNameFromModel().'.index');
     }
 
@@ -96,16 +121,19 @@ class OrderController extends BackEndController
      $order =  $this->model::find($id);
      $order->update($request->all());
      if(isset($request->delivery_id)){
-        $this->sendToFirebase($request->delivery_id);
+        // $this->sendToFirebase($request->delivery_id);
     }
      if($order->status == 5 ){
         $delivery = Delivery::find($order->delivery_id);
         if(isset($delivery))
         {
+            
             // return  ( $order->delivery_price * $delivery->delivery_ratio )  / 100 ; 
             $delivery->money += ( $order->delivery_price * $delivery->delivery_ratio )  / 100 ;
             // return $delivery->money ;
             $delivery->save();
+            $order->delivery_ratio= ( $order->delivery_price * $delivery->delivery_ratio )  / 100;
+            $order->save();
             // return $delivery;
         }
         if($order->price < 0 ){

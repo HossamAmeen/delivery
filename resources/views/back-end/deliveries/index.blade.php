@@ -29,8 +29,9 @@
                             <th>البريد</th>
                              <th>الهاتف</th>
                              <th>العنوان</th>
-                             {{-- <th>كتبقي الفلوس</th> --}}
-                             {{-- <th>خصومات</th> --}}
+                             <th>فلوس التوصيل</th>
+                             <th>فلوس اليومية</th>
+                             <th>خصومات الشهرية</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -43,14 +44,24 @@
                                     <td>{{$item->email}}</td>
                                     <td>{{$item->phone}}</td>
                                     <td>{{$item->address}}</td>
-                                    {{-- @if(isset($item->money))
+                                    @if(isset($item->money))
                                     <td>{{$item->money}}</td>
                                     @else 
                                     <td>0</td>
-                                    @endif --}}
-                                    {{-- @if(isset($item->deduction))
-                                    <td>{{$item->deduction}}</td>
+                                    @endif
+                                    @if(isset($item->daily_money))
+                                    <td>{{$item->daily_money}}</td>
                                     @else 
+                                    <td>0</td>
+                                    @endif
+                                    {{-- @if(isset($item->sanctions))
+                                    <td>{{$item->sanctions->sum('deduction')}}</td>
+                                    @else 
+                                    <td>0</td>
+                                    @endif --}}
+                                    {{-- @if( $item->sumS() == null || 1) --}}
+                                    <td>{{$item->sumS()}}</td>
+                                    {{-- @else 
                                     <td>0</td>
                                     @endif --}}
                                     <td>

@@ -35,6 +35,8 @@
             <th>العنوان</th>
             <th>التقيم</th>
             <th> معدل التقيم</th>
+            <th> نسبة موظف التوصيل</th>
+            <td>تاريخ</td>
             <th></th>
         </tr>
     </thead>
@@ -55,7 +57,12 @@
             @endif
             <td>{{$item->price}}</td>
             <td>{{$item->delivery_price}}</td>
+            @if(isset($item->description))
             <td>{{$item->description}}</td>
+            @else
+            <td>لا يوجد</td>
+            @endif
+          
             @if(isset($item->client))
             <td>{{$item->client->phone}}</td>
             @else
@@ -71,7 +78,14 @@
             @else
             <td>لا يوجد</td>
             @endif
+            @if(isset($item->rate))
             <td>{{$item->rate}}</td>
+            @else
+            <td>لا يوجد</td>
+            @endif
+            
+            <td> {{$item->delivery_ratio }}</td>
+            <td> {{$item->updated_at }}</td>
             <td>
                 <form action="{{ route($routeName.'.destroy' , ['id' => $item]) }}" method="post">
                     {{ csrf_field() }}

@@ -100,7 +100,7 @@
 </div>
 @php $input = "money"; @endphp
 <div class="form-group">
-    <label class="col-lg-3 control-label">متبقي له من فلوس </label>
+    <label class="col-lg-3 control-label">فلفوس التوصيل</label>
     <div class="col-lg-6">
         <input type="text" class="form-control" name="{{ $input }}" value="{{isset($row) ? $row->{$input} : ''}}" />
         @error($input)
@@ -110,7 +110,30 @@
         @enderror
     </div>
 </div>
-
+@php $input = "daily_money"; @endphp
+<div class="form-group">
+    <label class="col-lg-3 control-label">فلوس اليومية</label>
+    <div class="col-lg-6">
+        <input type="text" class="form-control" name="{{ $input }}" value="{{isset($row) ? $row->{$input} : ''}}" />
+        @error($input)
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
+</div>
+@php $input = "delivery_ratio"; @endphp
+<div class="form-group">
+    <label class="col-lg-3 control-label">نسبة من الطلبات </label>
+    <div class="col-lg-6">
+        <input type="text" class="form-control" name="{{ $input }}" value="{{isset($row) ? $row->{$input} : ''}}"  required/>
+        @error($input)
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
+</div>
 
 
 {{-- @php $input = "begin"; @endphp
@@ -131,7 +154,7 @@
     <label class="col-lg-3 control-label">معد الحضور</label>
     <div class="col-lg-6">
         {{-- <input type="time"  class="form-control" name="{{ $input }}" value="{{isset($row) ? date("H:i", strtotime($row->{$input}))  : ''}}" /> --}}
-        <input type="time"  class="form-control" name="{{ $input }}" value="{{isset($row) ? $row->{$input} : ''}}" />
+        <input type="time"  class="form-control" name="{{ $input }}" value="{{isset($row) ? $row->{$input} : ''}}" required/>
         @error($input)
         <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -144,7 +167,7 @@
 <div class="form-group">
     <label class="col-lg-3 control-label">معاد الانصراف </label>
     <div class="col-lg-6">
-        <input type="time"  class="form-control" name="{{ $input }}" value="{{isset($row) ? $row->{$input} : ''}}" />
+        <input type="time"  class="form-control" name="{{ $input }}" value="{{isset($row) ? $row->{$input} : ''}}" required/>
         @error($input)
         <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>

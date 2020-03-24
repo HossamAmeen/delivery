@@ -38,7 +38,8 @@ class CreateOrdersTable extends Migration
             $table->string('description')->nullable();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
-            $table->double('rate')->default(2.5);
+            $table->double('delivery_ratio')->nullable();
+            $table->double('rate')->nullable();
             $table->string('review')->nullable();
             $table->bigInteger('client_id')->unsigned()->nullable();
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');

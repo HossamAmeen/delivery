@@ -11,7 +11,7 @@ class Delivery extends Authenticatable
 {
     use HasApiTokens, Notifiable;
     protected $fillable = ['name', 'email', 'password',
-        'phone', 'phone2', 'address', 'address2', 'attendance', 'departure',
+        'phone', 'phone2','daily_money', 'delivery_ratio','address', 'address2', 'attendance', 'departure',
         'is_free', 'money','deduction', 'city_id',
     ];
     protected $hidden = [
@@ -46,4 +46,13 @@ class Delivery extends Authenticatable
         return date("H:i", strtotime($value) );
       
     }
+    public function sanctions()
+    {
+       return $this->hasMany(Sanction::class); //->sum('deduction')
+    }
+    public function sumS()
+    {
+        return   Sanction::where('delivery_id' , $this->id)->whereMonth('date' , now())->sum('deduction');
+    }
+    
 }
