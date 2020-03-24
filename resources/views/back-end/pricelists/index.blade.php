@@ -1,5 +1,5 @@
 @extends('back-end.layout.app')
- @php $row_num = 1;   $pageTitle = "الخدمات" @endphp  
+ @php $row_num = 1;   $pageTitle = "قائمة الاسعار" @endphp  
 @section('title')
    {{$pageTitle}}
 @endsection
@@ -24,8 +24,8 @@
                         <thead>
                             <tr>
                             <th>#</th>
-                            <th> اسم الخدمه</th>
-                            <th>السعر</th>
+                            <th> صورة</th>
+                            <th>الفتره المتاحة</th>
                                
                                
                                 <th></th>
@@ -35,8 +35,8 @@
                             @foreach ($rows as $item)
                                  <tr>  
                                     <td> {{$row_num++}}</td>
-                                    <td>{{$item->name}}</td>
-                                    <td>{{$item->price}}</td>
+                                    <td><img src="{{asset($item->image)}}" height="300px" width="300px" style="margin:0 10%;"> <br><br></td>
+                                    <td>{{$item->time}}</td>
                                   
                                      <td>
                                         @include('back-end.shared.buttons.delete')

@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class PriceList extends Model
 {
-   protected $fillable = ['name' , 'price'];
+   protected $fillable = ['image' , 'time'];
 }

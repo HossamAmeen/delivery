@@ -42,8 +42,11 @@
             <td> {{$row_num++}}</td>
             <td>{{$item->date}}</td>
             <td>{{$item->expenses}}</td>
+            @if(isset($item->note))
             <td>{{$item->note}}</td>
-        
+            @else 
+            <td>لا يوجد</td>
+            @endif
             <td>
                 @include('back-end.shared.buttons.delete')
             </td>

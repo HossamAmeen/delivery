@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Attendce;
+use App\Models\Sanction;
 use App\Models\Delivery;
 
 class AttendceController extends BackEndController
@@ -41,15 +42,16 @@ class AttendceController extends BackEndController
         {
             $delivery->deduction += $request->deduction ; 
             $delivery->save();
+            Sanction::create([
+                'date' =>  date('Y-m-d') ,
+                'deduction' =>  $request->deduction,
+                'reason' => "تأخير",
+                'delivery_id' =>$attendance->delivery_id ,
+            ]);
         }
            
        }
       
-       
-    //   return date("Y-m-d H:i:s", time());
-    // return date("Y-m-d H:i:s", $attendanceTime);
-    //    return time();
-    // return $attendance ;
         return redirect()->route($this->getClassNameFromModel().'.index');
     }
 

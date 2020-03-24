@@ -19,7 +19,17 @@ class DailyAccountController extends BackEndController
        
         $this->model->create($request->all());
         $accountToday = Account::where('date' , date('Y-m-d'))->first();
+        if(isset( $accountToday))
         $accountToday->expenses =  $accountToday->expenses - $request->expenses;
+        else
+        {
+            $accountToday = new Account();
+            
+            $accountToday->date = date('Y-m-d');
+            $accountToday->expenses = - $request->expenses ;
+            $accountToday->save();
+        }
+        
         $accountToday->save();
         return redirect()->route($this->getClassNameFromModel().'.index');
     }

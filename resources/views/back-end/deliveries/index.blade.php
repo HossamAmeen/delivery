@@ -29,8 +29,8 @@
                             <th>البريد</th>
                              <th>الهاتف</th>
                              <th>العنوان</th>
-                             <th>كتبقي الفلوس</th>
-                             <th>خصومات</th>
+                             {{-- <th>كتبقي الفلوس</th> --}}
+                             {{-- <th>خصومات</th> --}}
                                 <th></th>
                             </tr>
                         </thead>
@@ -43,16 +43,16 @@
                                     <td>{{$item->email}}</td>
                                     <td>{{$item->phone}}</td>
                                     <td>{{$item->address}}</td>
-                                    @if(isset($item->money))
+                                    {{-- @if(isset($item->money))
                                     <td>{{$item->money}}</td>
                                     @else 
                                     <td>0</td>
-                                    @endif
-                                    @if(isset($item->deduction))
+                                    @endif --}}
+                                    {{-- @if(isset($item->deduction))
                                     <td>{{$item->deduction}}</td>
                                     @else 
                                     <td>0</td>
-                                    @endif
+                                    @endif --}}
                                     <td>
                                      @include('back-end.shared.buttons.delete')
                                     </td>

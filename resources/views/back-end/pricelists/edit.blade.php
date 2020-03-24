@@ -24,7 +24,7 @@ $pageTitle = "تعديل الخبر" ;
     @csrf
     {{method_field('PUT')}}
     @include('back-end.'.$folderName.'.form')
-    
+    <img src="{{asset($row->image)}}" height="300px" width="300px" style="margin:0 10%;">
     <div class="form-group">
         <div class="col-lg-9 col-lg-offset-3">
             <button type="submit" class="btn btn-primary" onclick="myFunction()">تعديل</button>
