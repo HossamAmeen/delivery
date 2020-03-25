@@ -19,15 +19,17 @@ class ClientController extends Controller
         //     return $this->APIResponse(null , $request->validator->messages() ,  400);
         // }
         // return $request->password;
+        if(isset($request->password))
         $request['password'] = bcrypt($request->password);
         $client = Client::create($request->all());
-        auth()->login($client);
+        // auth()->login($client);
         $success['token'] =  $client->createToken('token')->accessToken;
 
         return $this->APIResponse($success, null, 200);
         return response()->json($success, 200);
     }
 
+    
     public function login(Request $request)
     {
         $field = 'phone';
@@ -51,7 +53,21 @@ class ClientController extends Controller
       
 
     }
+    public function loginWithGmail()
+    {
+        if(request('password')!="Delivery@2019To2020#"){
+            return $this->APIResponse(null, "Unauthorized", 400);
+        }
+        $client = Client::where('google_id', request('account_id'))->first();
 
+        if(isset($client) )
+       {
+        $success['token'] =  $client->createToken('token')->accessToken;
+        return $this->APIResponse($success, null, 200);
+       } 
+        else
+        return $this->APIResponse(null, "not found", 404);
+    }
     public function loginStudy(Request $request){ 
         $credentials = request(['phone', 'password']);
 
@@ -67,6 +83,14 @@ class ClientController extends Controller
         return response()->json($success, 200);
     }
 
+    public function checkEmail()
+    {
+        $client = Client::where('email' , request('email'))->first();
+        if(isset($client))
+        return $this->APIResponse(null, null, 201);
+        else
+        return $this->APIResponse(null, "not found", 404);
+    }
     public function getAccount()
     {
         $client = Client::findOrFail(Auth::guard('client-api')->user()->id);

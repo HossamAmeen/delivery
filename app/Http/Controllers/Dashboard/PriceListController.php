@@ -36,17 +36,39 @@ class PriceListController extends BackEndController
 
     public function update(Request $request, $id)
     {
-        $complaint = $this->model::find($id);
+        $priceList = $this->model::find($id);
         $requestArray = $request->all();
             // return $requestArray ; 
+            // $oldImage = null ; 
             if(isset($requestArray['image']) )
             {
+                if (file_exists($priceList->image)) 
+                {
+                    // $oldImage = $priceList->image ; 
+                    unlink($priceList->image);
+                }
+                   
+                    
                 $fileName = $this->uploadImage2($request );
                 // $requestArray['image'] = "شسي";// $fileName;
                 $requestArray['image'] =  $fileName;
+            
             }
-        $complaint->update($requestArray);
+        $priceList->update($requestArray);
         session()->flash('action', 'تم التحديث بنجاح');
         return redirect()->route($this->getClassNameFromModel().'.index');
+    }
+    public function destroy($id)
+    {
+       $item =  $this->model->FindOrFail($id);
+       if (file_exists($item->image)) 
+            {
+                // $oldImage = $priceList->image ; 
+                unlink($item->image);
+            }
+            $item->delete();
+        session()->flash('action', 'تم الحذف بنجاح');
+        return redirect()->back();
+       
     }
 }

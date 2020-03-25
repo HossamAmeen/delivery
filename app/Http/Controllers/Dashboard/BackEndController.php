@@ -117,8 +117,8 @@ class BackEndController extends Controller
         $photo = $request->file('image');
         $fileName = time().str_random('10').'.'.$photo->getClientOriginalExtension();
         $destinationPath = ('uploads/'.$this->getClassNameFromModel().'/');
-        $image = Image::make($photo->getRealPath())->resize($height, $width);
-
+        // $image = Image::make($photo->getRealPath())->resize($height, $width);
+        $image = Image::make($photo->getRealPath());
             // return $destinationPath;
            
          if(!is_dir($destinationPath) ){
