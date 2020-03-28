@@ -33,12 +33,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
         
-        App\Models\PriceList::create(
-            [
-                'name' => 'ديلفري',
-               'price' => 1
-            ]
-        );
+     
         $this->call([
             UserSeeder::class,
         //    ClientSeeder::class,

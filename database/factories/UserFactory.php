@@ -105,30 +105,6 @@ $factory->define(App\Models\Configration::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\Models\Category::class, function (Faker $faker) {
-    return [
-        'name' => $faker->name,
-    ];
-});
-
-$factory->define(App\Models\ServiceCategory::class, function (Faker $faker) {
-    return [
-        'name' => $faker->name,
-        'category_id' => $faker->randomElement(getCategory()),
-        'delivery_price' => $faker->randomDigit,
-        'special' => $faker->boolean,
-        'image' => 'uploads\servicecategories\services.png',
-    ];
-});
-
-$factory->define(App\Models\LastWork::class, function (Faker $faker) {
-    return [
-        'title' => $faker->name,
-        'description' => $faker->sentence,
-        'image' => 'image.jpg',
-    ];
-});
-
 $factory->define(App\Models\Complaint::class, function (Faker $faker) {
     return [
         'first_name' => $faker->name,
@@ -137,72 +113,4 @@ $factory->define(App\Models\Complaint::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\Models\ServiceProvider::class, function (Faker $faker) {
-    return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' =>  bcrypt('admin'), // password
-        'remember_token' => Str::random(10),
-        'phone' => $faker->randomDigit,
-        'image' => 'image.jpg',
-        'country' => $faker->country,
-        'city' => $faker->city,
-    ];
-});
 
-$factory->define(App\Models\ServiceProviderService::class, function (Faker $faker) {
-    return [
-        'service_provider_id' => $faker->randomElement(getServiceProvider()),
-        'service_category_id' => $faker->randomElement(getServiceCategory()),
-        'description' => $faker->sentence,
-        'is_hidden' =>$faker->boolean,
-        'rate' => $faker->randomDigit,
-        'price' => $faker->randomDigit,
-        'discount' => $faker->randomDigit,
-        'image' => 'uploads\service-detials.png',
-        'overview' => $faker->sentence,
-        'title' => $faker->title,
-        'program' => $faker->sentence,
-    ];
-});
-
-$factory->define(App\Models\ServiceProviderWallet::class, function (Faker $faker) {
-    return [
-        'service_provider_id' => $faker->randomElement(getServiceProvider()),
-        'balance' => $faker->randomDigit,
-        'date' => $faker->date(),
-        'receive' => $faker->randomDigit,
-    ];
-});
-
-$factory->define(App\Models\ServiceType::class, function (Faker $faker) {
-    return [
-        'price' => $faker->randomDigit,
-        'days' => $faker->randomDigit,
-       
-        'service_provider_service_id' => $faker->randomElement(getServiceProviderService()),
-    ];
-});
-
-$factory->define(App\Models\ServiceQuestion::class, function (Faker $faker) {
-    return [
-        'question' => $faker->sentence,
-        'type' => $faker->randomElement(['text', 'multi_choice', 'boolean', 'file']),
-    ];
-});
-
-$factory->define(App\Models\ServiceQuestionMultipleChoice::class, function (Faker $faker) {
-    return [
-        'choice' => $faker->sentence,
-        'service_question_id' => $faker->randomElement(getServiceQuestion()),
-    ];
-});
-
-$factory->define(App\Models\ServiceComment::class, function (Faker $faker) {
-    return [
-        'client_id' => $faker->randomElement(getCities()),
-        'service_provider_service_id' =>  $faker->randomElement(getServiceProviderService()),
-            'comment' => $faker->sentence,
-    ];
-});
