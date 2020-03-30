@@ -16,6 +16,37 @@ class AttendceController extends BackEndController
     }
 
 
+    public function index()
+    {
+        $rows = $this->model;
+        $rows = $this->filter($rows);
+        $with = $this->with();
+        if(!empty($with)){
+            $rows = $rows->with($with);
+        }
+        if(request('date') != null)
+        return "test";
+        else
+        // return "test2";
+        $rows = $rows->orderBy('id', 'DESC')->get();
+        $moduleName = $this->pluralModelName();
+        $sModuleName = $this->getModelName();
+        $routeName = $this->getClassNameFromModel();
+        $pageTitle = "Control ".$moduleName;
+        $pageDes = "Here you can add / edit / delete " .$moduleName;
+        // return $rows;
+        // return Auth::user()->role;
+
+        return view('back-end.' . $routeName . '.index', compact(
+            'rows',
+            'pageTitle',
+            'moduleName',
+            'pageDes',
+            'sModuleName',
+            'routeName'
+        ));
+    }
+
     public function store(Request $request)
     {
         // return $request->all();
