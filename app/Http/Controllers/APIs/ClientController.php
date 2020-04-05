@@ -40,7 +40,7 @@ class ClientController extends Controller
 
         $client = Client::create($request->all());
         $success['token'] = $client->createToken('token')->accessToken;
-        $smsVerfication->delete();
+        // $smsVerfication->delete();
         return $this->APIResponse($success, null, 200);
 
     }
