@@ -36,7 +36,9 @@
                 <div class="col-md-6 col-md-pull-3 get-it">
                     <h1>دليفري المدينة أسيوط</h1>
                     <p>كل طلباتك وانت مكانك</p>
-                    <p><a class="btn btn-primary btn-lg" role="button" href="#"><i class="fa fa-apple"></i>&nbsp; not Available on&nbsp; App Store</a><a class="btn btn-success btn-lg" role="button" href="https://play.google.com/store/apps/details?id=com.app.dlivryelmadinaasyut"><i class="fa fa-google"></i> Available on Google Play</a></p>
+                    <p><a class="btn btn-primary btn-lg" role="button" href="#">
+                        <i class="fa fa-apple"></i>&nbsp; not Available on&nbsp; App Store</a>
+                        <a class="btn btn-success btn-lg" role="button" href="https://play.google.com/store/apps/details?id=com.app.dlivryelmadinaasyut"><i class="fa fa-google"></i> Available on Google Play</a></p>
                 </div>
             </div>
         </div>
@@ -47,8 +49,9 @@
                 <div class="col-sm-6">
                     <h5>دليفري المدينة أسيوط © 2020</h5>
                 </div>
-                <div class="col-sm-6 social-icons"><a href="https://www.facebook.com/Deliveryasyut/"><i class="fa fa-facebook"></i></a><a href="https://wa.me/010206311133"><i class="fa fa-whatsapp"></i></a></div>
-            </div>
+                <div class="col-sm-6 social-icons"><a href="https://www.facebook.com/Deliveryasyut/">
+                    <i class="fa fa-facebook"></i></a><a href="https://wa.me/01020631113"><i class="fa fa-whatsapp"></i></a></div>
+            </div>                                                          
         </div>
     </footer>
     <script src="{{asset('assets/js/jquery.min.js')}}"></script>
