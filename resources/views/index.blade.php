@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Dlivry2</title>
+    <title>دليفري المدينه اسيوط</title>
     <link rel="stylesheet" href="{{asset('assets/bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic">
     <link rel="stylesheet" href="{{asset('assets/fonts/font-awesome.min.css')}}">
@@ -51,7 +51,7 @@
                 </div>
                 <div class="col-sm-6 social-icons"><a href="https://www.facebook.com/Deliveryasyut/">
                     <i class="fa fa-facebook"></i></a><a href="https://wa.me/01020631113"><i class="fa fa-whatsapp"></i></a></div>
-            </div>                                                          
+            </div>                                                         
         </div>
     </footer>
     <script src="{{asset('assets/js/jquery.min.js')}}"></script>
