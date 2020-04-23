@@ -199,29 +199,15 @@ class OrderController extends BackEndController
              ->withServiceAccount($serviceAccount)
              ->withDatabaseUri('https://delivery-e3e58.firebaseio.com/')
              ->create();
-
          $database = $firebase->getDatabase();
-
-         // $database->getReference('/deliveries') // this is the root reference
-         // ->update(['1' => 55 ]);
-
          $reference = $database->getReference('/deliveries');
 
          $snapshot = $reference->getSnapshot()->getValue();
-         //    return  $snapshot;
-         // $ids =   $database->getReference('/deliveries')->getChildKeys();
 
-         // return  $database->getReference('/deliveries')->getChildKeys();
-
-         // $database->getReference('deliveries')->remove();
-         $snapshot[$clinetId] =$orderID;
+         $snapshot[1] =9;
          $newPost = $database
              ->getReference('/deliveries')
              ->update($snapshot);
-
-
-
-
     }
 
     public function orderCount()
