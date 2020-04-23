@@ -38,8 +38,8 @@ Route::prefix('admin')->group(function () {
             Route::resource('sanctions', 'SanctionController');
             Route::resource('accounts', 'AccountController');
             Route::resource('dailyaccounts', 'DailyAccountController');
+            Route::get('order/count', 'OrderController@orderCount');
 
-          
         });
 
     });

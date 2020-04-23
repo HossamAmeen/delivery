@@ -28,7 +28,7 @@ class DeliveryController extends Controller
     public function orders()
     {
         $orders = Order::where('delivery_id' , Auth::guard('delivery-api')->user()->id)
-        ->with('client')
+        ->with(['client', 'images'])
         ->orderBy('id', 'DESC')
         ->get();
 
@@ -42,8 +42,16 @@ class DeliveryController extends Controller
         ->with('client')
         ->orderBy('id', 'DESC')
         ->first();
-        
-
+        return $this->APIResponse($orders, null, 201);
+    }
+    public function orderDelivered()
+    {
+        $orders = Order::latest()
+        ->where('delivery_id' , Auth::guard('delivery-api')->user()->id)
+        ->where('status' , 5)
+        ->with('client')
+        ->orderBy('id', 'DESC')
+        ->first();
         return $this->APIResponse($orders, null, 201);
     }
 
@@ -59,7 +67,7 @@ class DeliveryController extends Controller
             $delivery = Delivery::find($order->delivery_id);
             if(isset($delivery))
             {
-                // return  ( $order->delivery_price * $delivery->delivery_ratio )  / 100 ; 
+                // return  ( $order->delivery_price * $delivery->delivery_ratio )  / 100 ;
                 $delivery->money += ( $order->delivery_price * $delivery->delivery_ratio )  / 100 ;
                 // return $delivery->money ;
                 $delivery->save();
@@ -69,7 +77,7 @@ class DeliveryController extends Controller
                 $client = Client::find($order->client_id);
                 if(isset($client))
                 {
-                    $client->money -= $order->price ; 
+                    $client->money -= $order->price ;
                     $client->save();
                 }
             }
@@ -77,6 +85,6 @@ class DeliveryController extends Controller
         }
         return $this->APIResponse(null, "not found this order", 201);
 
-       
+
     }
 }

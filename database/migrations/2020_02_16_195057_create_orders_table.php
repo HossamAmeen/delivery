@@ -13,26 +13,26 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
-        
+
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-           
+
             $table->integer('price')->default(0);
             $table->integer('delivery_price')->default(0);
             $table->integer('status')->default(1);
 
             /**
              * status
-             * 
+             *
              * 1 -> new
-             * 
+             *
              * 2 -> in proogess
-             * 
+             *
              * 3 -> done
-             * 
+             *
              * 4 -> indelivery
-             * 
+             *
              * 5- evulate
              */
             $table->string('description')->nullable();

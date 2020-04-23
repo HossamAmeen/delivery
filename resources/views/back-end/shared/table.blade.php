@@ -3,7 +3,7 @@
 <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-               
+
                 <div class="panel-body">
                 <!--Table Wrapper Start-->
                     <div class="ls-editable-table table-responsive ls-table">
@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-</div>                       
+</div>
 @push('js')
      <!--botbox library script-->
   <script src="{{asset('panel/assets/js/bootbox.min.js')}}"></script>
@@ -21,7 +21,7 @@
           function check() {
             $('form').submit(function(e) {
                 var currentForm = this;
-               
+
                 e.preventDefault();
                 //console.log("should go to " + currentForm);
                 bootbox.dialog({
@@ -33,9 +33,9 @@
                         className: "btn-success",
                         callback: function() {
 
-                            
+
                             currentForm.submit();
-                           
+
                         }
                     },
                     danger: {

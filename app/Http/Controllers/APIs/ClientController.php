@@ -9,10 +9,12 @@ use App\Models\Order;
 use App\Models\SmsVerfication;
 use Auth;
 use Illuminate\Http\Request;
+use Image;
 
 class ClientController extends Controller
 {
     use APIResponseTrait;
+
     // public function register(ClientRequest $request)
     public function register(Request $request)
     {
@@ -130,7 +132,12 @@ class ClientController extends Controller
     public function addOrder(Request $request)
     {
         $request['client_id'] = Auth::guard('client-api')->user()->id;
-        Order::create($request->all());
+        $order = Order::create($request->all());
+
+        if ($request->images) {
+            $this->uploadImages($request, $order->id);
+        }
+
         return $this->APIResponse(null, null, 201);
     }
 
@@ -143,4 +150,29 @@ class ClientController extends Controller
 
         return $this->APIResponse(null, null, 201);
     }
+
+    protected function uploadImages($request, $orderId)
+    {
+
+        $photos = $request->file('images');
+
+        foreach ($photos as $photo) {
+            $fileName = time() . str_random('10') . '.' . $photo->getClientOriginalExtension();
+            $destinationPath = ('uploads/orders/');
+            // $image = Image::make($photo->getRealPath())->resize($height, $width);
+            $image = Image::make($photo->getRealPath());
+            // return $destinationPath;
+
+            if (!is_dir($destinationPath)) {
+                mkdir($destinationPath);
+            }
+            $image->save($destinationPath . $fileName);
+
+            \App\Models\ImagesOrder::create([
+                'image' => 'uploads/orders/' . $fileName,
+                'order_id' => $orderId,
+            ]);
+        }
+    }
+
 }

@@ -84,7 +84,8 @@ class BackEndController extends Controller
         $folderName = $this->getClassNameFromModel();
         $routeName = $folderName;
         $append = $this->append();
-        // return $row;
+        //  return $row->images;
+
         return view('back-end.' . $folderName . '.edit', compact(
             'row',
             'pageTitle',
@@ -95,7 +96,7 @@ class BackEndController extends Controller
         ))->with($append);
     }
     protected function uploadImage($request , $height = 400 , $width = 400){
-       
+
         $photo = $request->file('image');
         $fileName = time().str_random('10').'.'.$photo->getClientOriginalExtension();
         // $destinationPath = public_path('uploads/'.$this->getClassNameFromModel().'/');
@@ -103,7 +104,7 @@ class BackEndController extends Controller
         // $image = Image::make($photo->getRealPath())->resize($height, $width);
 
             // return $destinationPath;
-         
+
          if(!is_dir($destinationPath) ){
              mkdir($destinationPath);
          }
@@ -113,20 +114,21 @@ class BackEndController extends Controller
     }
 
     protected function uploadImage2($request , $height = 400 , $width = 400){
-       
+
         $photo = $request->file('image');
         $fileName = time().str_random('10').'.'.$photo->getClientOriginalExtension();
         $destinationPath = ('uploads/'.$this->getClassNameFromModel().'/');
         // $image = Image::make($photo->getRealPath())->resize($height, $width);
         $image = Image::make($photo->getRealPath());
             // return $destinationPath;
-           
+
          if(!is_dir($destinationPath) ){
              mkdir($destinationPath);
          }
         $image->save($destinationPath.$fileName);
         return 'uploads/'.$this->getClassNameFromModel().'/' . $fileName;
     }
+
 
     protected function uploadFile($request , $height = 400 , $width = 400){
 
@@ -143,6 +145,8 @@ class BackEndController extends Controller
         $photo->move($destinationPath , $fileName);
         return 'uploads/'.$this->getClassNameFromModel().'/'. $fileName;
     }
+
+
 
     protected function filter($rows)
     {

@@ -46,7 +46,7 @@
                 <i class="fas fa-edit"></i><span>تعديل بيانات الحساب</span>
             </a>
         </li>
-      
+
         <li class="{{is_active('clients')}}">
             <a href="{{route('clients.index')}}"  class="{{is_active('clients')}}">
                     <i class="far fa-newspaper"></i><span>العملاء</span>
@@ -69,11 +69,12 @@
 
         <li class="{{is_active('show-orders')}}">
             <a  href="#"  class="{{is_active('show-orders')}}">
-                <i class="fa fa-bar-chart-o"></i> <span>الطلبات</span>
+                <i class="fa fa-bar-chart-o"></i> <span>الطلبات</span> <span class="badge badge-red order_count" ></span>
             </a>
             <ul   >
                 <li>
-                    <a  href="{{url('admin/show-orders/1')}}" @if(isset($status) && $status == 1) class="active" @endif>الطلبات جديده </a>
+                    <a  href="{{url('admin/show-orders/1')}}" @if(isset($status) && $status == 1) class="active" @endif>الطلبات جديده  <span class="badge badge-red order_count" >0</span> </a>
+
                 </li>
                 <li>
                     <a  href="{{url('admin/show-orders/2')}}" @if(isset($status) && $status == 2) class="active" @endif> الطلبات تحت التنفيذ </a>
@@ -98,7 +99,7 @@
             </a>
 
         </li>
-        
+
         <li class="{{is_active('services')}}">
             <a href="{{route('services.index')}}"  class="{{is_active('services')}}">
                     <i class="far fa-newspaper"></i><span>الخدمات</span>
@@ -116,7 +117,7 @@
                     <i class="far fa-newspaper"></i><span>الحضور</span>
             </a>
         </li>
-        
+
         <li class="{{is_active('complaints')}}">
             <a href="{{route('complaints.index')}}"  class="{{is_active('complaints')}}">
                     <i class="far fa-newspaper"></i><span>الشكاوي</span>
@@ -142,7 +143,7 @@
             </a>
 
         </li>
-       
+
         {{-- <li class="{{is_active('questions')}}">
             <a href="{{route('questions.index')}}"  class="{{is_active('questions')}}">
                     <i class="fa fa-question"></i><span>الأسئله الشائعه</span>

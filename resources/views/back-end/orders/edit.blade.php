@@ -1,60 +1,80 @@
 @extends('back-end.layout.app')
 @php
 
-    $pageTitle = "تعديل طلب" ;
- @endphp  
+$pageTitle = "تعديل طلب" ;
+@endphp
 @section('title')
-    {{ $pageTitle }}
+{{ $pageTitle }}
 @endsection
 
 @section('content')
 
-    @component('back-end.layout.header')
-        @slot('nav_title')
-            {{ $pageTitle }}
-           
-        @endslot
-    @endcomponent
+@component('back-end.layout.header')
+@slot('nav_title')
+{{ $pageTitle }}
 
-        @component('back-end.shared.create')
-        <form id="defaultForm" method="post" class="form-horizontal ls_form" action="{{ route($routeName.'.update' , ['id' => $row]) }}"
-                    data-bv-message="This value is not valid"
-                    data-bv-feedbackicons-valid="fa fa-check"
-                    data-bv-feedbackicons-invalid="fa fa-bug"
-                    data-bv-feedbackicons-validating="fa fa-refresh"
-                    enctype="multipart/form-data"
-                    >  
-                    @csrf
-                    {{method_field('PUT')}}
-                    @include('back-end.'.$folderName.'.form')     
-                <div class="form-group">
-                        <div class="col-lg-9 col-lg-offset-3">
-                            <button type="submit" class="btn btn-primary" onclick="myFunction()">تعديل</button>
-                        </div>
-                    </div>
-            </form>  
-        @endcomponent                    
+@endslot
+@endcomponent
+
+@component('back-end.shared.create')
+<form id="defaultForm" method="post" class="form-horizontal ls_form"
+    action="{{ route($routeName.'.update' , ['id' => $row]) }}" data-bv-message="This value is not valid"
+    data-bv-feedbackicons-valid="fa fa-check" data-bv-feedbackicons-invalid="fa fa-bug"
+    data-bv-feedbackicons-validating="fa fa-refresh" enctype="multipart/form-data">
+    @csrf
+    {{method_field('PUT')}}
+    @include('back-end.'.$folderName.'.form')
+    @if (isset($row->images))
+
+    <div class="row" style="
+
+        clear: both;
+        display: table;
+     ">
+        @foreach ($row->images as $image)
+        <div class="column" style="
+            float: left;
+            width: 33.33%;
+            padding: 5px;
+          ">
+            <img src="{{asset($image->image)}}" style="width:100%" height="300">
+        </div>
+        @endforeach
+
+
+
+    </div>
+
+    @endif
+
+    <div class="form-group">
+        <div class="col-lg-9 col-lg-offset-3">
+            <button type="submit" class="btn btn-primary" onclick="myFunction()">تعديل</button>
+        </div>
+    </div>
+</form>
+@endcomponent
 @endsection
 @push('css')
-      <!-- Responsive Style For-->
-  <link href="{{asset('panel/assets/css/rtl-css/responsive-rtl.css')}}" rel="stylesheet">
-  <!-- Responsive Style For-->
-  <link rel="stylesheet" href="{{asset('panel/assets/css/rtl-css/plugins/summernote-rtl.css')}}">
-  <!-- Custom styles for this template -->
+<!-- Responsive Style For-->
+<link href="{{asset('panel/assets/css/rtl-css/responsive-rtl.css')}}" rel="stylesheet">
+<!-- Responsive Style For-->
+<link rel="stylesheet" href="{{asset('panel/assets/css/rtl-css/plugins/summernote-rtl.css')}}">
+<!-- Custom styles for this template -->
 
 
-    <!-- Plugin Css Put Here -->
-  
-    <link rel="stylesheet" href="{{asset('panel/assets/css/rtl-css/plugins/fileinput-rtl.css')}}">
+<!-- Plugin Css Put Here -->
+
+<link rel="stylesheet" href="{{asset('panel/assets/css/rtl-css/plugins/fileinput-rtl.css')}}">
 @endpush
 @push('js')
-     <!--Upload button Script Start-->
-   <script src="{{asset('panel/assets/js/fileinput.min.js')}}"></script>
-   <!--Upload button Script End-->
+<!--Upload button Script Start-->
+<script src="{{asset('panel/assets/js/fileinput.min.js')}}"></script>
+<!--Upload button Script End-->
 
 <!--Auto resize  text area Script Start-->
 <script src="{{asset('panel/assets/js/jquery.autosize.js')}}"></script>
- <!--Auto resize  text area Script Start-->
+<!--Auto resize  text area Script Start-->
 <script src="{{asset('panel/assets/js/pages/sampleForm.js')}}"></script>
 
 

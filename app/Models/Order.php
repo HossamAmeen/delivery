@@ -19,4 +19,9 @@ class Order extends Model
     {
         return $this->belongsTo(Client::class);
     }
+
+    function images()
+    {
+        return $this->hasMany(ImagesOrder::class , 'order_id');
+    }
 }

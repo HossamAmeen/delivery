@@ -2,8 +2,8 @@
 @php
 
  $pageTitle = " تعديل عرض " . $row->user_name ;
- 
- @endphp  
+
+ @endphp
 @section('title')
     {{ $pageTitle }}
 @endsection
@@ -13,7 +13,7 @@
     @component('back-end.layout.header')
         @slot('nav_title')
             {{ $pageTitle }}
-            {{-- <a href="{{ route($routeName.'.create') }}">  
+            {{-- <a href="{{ route($routeName.'.create') }}">
                     <button class="alert-success"> <i class="fa fa-plus"></i> </button>
             </a> --}}
         @endslot
@@ -31,11 +31,11 @@
                 data-bv-feedbackicons-invalid="fa fa-bug"
                 data-bv-feedbackicons-validating="fa fa-refresh"
                 enctype="multipart/form-data"
-                >  
+                >
                 @csrf
                 {{method_field('PUT')}}
-                @include('back-end.'.$folderName.'.form')   
-                @php $input = "image"; @endphp          
+                @include('back-end.'.$folderName.'.form')
+                @php $input = "image"; @endphp
                 <div class="form-group">
                         <label class="col-md-2 control-label">الصورة</label>
                         <div class="col-md-10 ls-group-input">
@@ -54,15 +54,15 @@
                     </div>
                 </div>
              </form>
-               
-                <img src="{{asset("uploads/".$routeName.'/'.$row->image)}}" height="300px" width="300px" style="margin:0 10%;"> <br><br>
+
+                <img src="{{asset($row->image)}}" height="300px" width="300px" style="margin:0 10%;"> <br><br>
                 <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-10">
                         <button class="btn btn-info" type="submit">  تعديل  </button>
                     </div>
                  </div>
              </form>
-        @endcomponent                    
+        @endcomponent
 @endsection
 @push('css')
       <!-- Responsive Style For-->
@@ -73,7 +73,7 @@
 
 
     <!-- Plugin Css Put Here -->
-  
+
     <link rel="stylesheet" href="{{asset('panel/assets/css/rtl-css/plugins/fileinput-rtl.css')}}">
 @endpush
 @push('js')

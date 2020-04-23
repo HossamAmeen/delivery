@@ -62,7 +62,7 @@
             @else
             <td>لا يوجد</td>
             @endif
-          
+
             @if(isset($item->client))
             <td>{{$item->client->phone}}</td>
             @else
@@ -83,7 +83,7 @@
             @else
             <td>لا يوجد</td>
             @endif
-            
+
             <td> {{$item->delivery_ratio }}</td>
             <td> {{$item->updated_at }}</td>
             <td>
@@ -94,13 +94,13 @@
                         rel="tooltip" title="" class="btn btn-info" data-original-title="Edit {{ $sModuleName }}">
                         <i class="material-icons">تم</i>
                         </a>
-                   @elseif(isset($item->delivery) && $status == 4)
+                        @elseif(isset($item->delivery) && $status == 4)
                         <a href="{{ url('admin/change-status-order/'. ($status + 1).'/'.$item->id.'/'.$item->delivery->id) }}"
                             rel="tooltip" title="" class="btn btn-info" data-original-title="Edit {{ $sModuleName }}">
                             <i class="material-icons">تم</i>
                         </a>
 
-                    @endif
+                        @endif
                         <a href="{{ route($routeName.'.edit' , ['id' => $item]) }}" rel="tooltip" title=""
                             class="btn btn-info" data-original-title="Edit {{ $sModuleName }}">
                             <i class="material-icons">تعديل</i>
@@ -116,4 +116,33 @@
     </tbody>
 </table>
 @endcomponent
+
 @endsection
+@push('js')
+{{-- <script>
+      var interval = 6000;  // 1000 = 1 second, 3000 = 3 seconds
+    function order_counter(){
+        var ajax = new XMLHttpRequest();
+        var method = "GET";
+        //URL
+        var url = {!! json_encode(url("admin/order/count")) !!};
+        // console.log(url);
+        var asynchronons = true;
+        ajax.open(method, url, asynchronons);
+        ajax.send();
+        ajax.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                //v is variable that = json respone
+                var v = JSON.parse(this.responseText);
+                // console.log(v);
+                //itemName is key in JSON
+                $("#order_count").html(v['request']);
+                console.log(v['NewOrderCount']);
+                setTimeout(order_counter, interval);
+            }
+        }
+    }
+    // setTimeout(doAjax, interval);
+    setTimeout(order_counter, 1);
+</script> --}}
+@endpush
