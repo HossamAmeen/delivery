@@ -204,7 +204,7 @@ class OrderController extends BackEndController
 
          $snapshot = $reference->getSnapshot()->getValue();
 
-         $snapshot[1] =9;
+         $snapshot[$clinetId] =$orderID;
          $newPost = $database
              ->getReference('/clients')
              ->update($snapshot);
