@@ -214,7 +214,7 @@ class OrderController extends BackEndController
          // return  $database->getReference('/deliveries')->getChildKeys();
 
          // $database->getReference('deliveries')->remove();
-         $snapshot[$clinetId] ="$orderID . '-' . $orderstatus";
+         $snapshot[$clinetId] =$orderID;
          $newPost = $database
              ->getReference('/deliveries')
              ->update($snapshot);
