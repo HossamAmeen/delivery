@@ -82,6 +82,8 @@ class DeliveryController extends Controller
                     $client->save();
                     OrderController::notificationToClient($order->client_id , $order->id ,  $order->status);
                 }
+                else
+                return $this->APIResponse(null, "this client in not found for this order", 201);
             }
         //    $oredercon = new OrderController();
 
