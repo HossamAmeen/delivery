@@ -80,10 +80,11 @@ class DeliveryController extends Controller
                 {
                     $client->money -= $order->price ;
                     $client->save();
+                    OrderController::notificationToClient($order->client_id , $order->id ,  $order->status);
                 }
             }
         //    $oredercon = new OrderController();
-            OrderController::notificationToClient($order->client_id , $order->id ,  $order->status);
+
 
             return $this->APIResponse(null, null, 201);
         }
