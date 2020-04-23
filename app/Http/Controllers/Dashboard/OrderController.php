@@ -84,7 +84,7 @@ class OrderController extends BackEndController
     public function store(Request $request)
     {
         $order = $this->model->create($request->all());
-        $this::notificationToClient($order->client_id , $order->id ,  $order->status);
+        $this::notificationToClient($order->client_id , $order->id ,1);
         if (isset($request->delivery_id)) {
             $this->sendToFirebase($request->delivery_id);
         }
@@ -207,7 +207,7 @@ class OrderController extends BackEndController
          $snapshot = $reference->getSnapshot()->getValue();
 
         //  $snapshot[$clinetId] ="$orderstatus". '-'."$orderID";
-         $snapshot[$clinetId] ="$orderstatus-1";//"$orderstatus'-'$orderID";
+         $snapshot[$clinetId] ="$orderstatus-$orderID";//"$orderstatus'-'$orderID";
          $newPost = $database
              ->getReference('/clients')
              ->update($snapshot);
