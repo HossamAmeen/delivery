@@ -191,7 +191,7 @@ class OrderController extends BackEndController
         //   print_r($newPost->getvalue() );
     }
 
-    static function  notificationToClient($clinetId , $orderID)
+    static function  notificationToClient($clinetId , $orderID , $orderstatus)
     {
         // return __DIR__ ;
         $serviceAccount = ServiceAccount::fromJsonFile(__DIR__ . '/delivery-e3e58-firebase-adminsdk-imo2m-b7f0400810.json');
@@ -208,7 +208,7 @@ class OrderController extends BackEndController
 
         $snapshot = $reference->getSnapshot()->getValue();
 
-        $snapshot[$clinetId] =$orderID;
+        $snapshot[$clinetId] =$orderID . '-' . $orderstatus;
         $newPost = $database
             ->getReference('/clients')
             ->update($snapshot);
