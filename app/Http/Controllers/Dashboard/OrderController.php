@@ -31,10 +31,7 @@ class OrderController extends BackEndController
         $sModuleName = $this->getModelName();
         $routeName = $this->getClassNameFromModel();
 
-        $pageTitle = "";
-        $pageTitle = "";
-        $pageTitle = "";
-        $pageTitle = "";
+
         $pageTitle = "";
         $pageDes = "Here you can add / edit / delete " . $moduleName;
         // return $rows;
@@ -88,7 +85,7 @@ class OrderController extends BackEndController
     {
         $order = $this->model->create($request->all());
         if (isset($request->delivery_id)) {
-            // $this->sendToFirebase($request->delivery_id);
+            $this->sendToFirebase($request->delivery_id);
         }
         if ($order->status == 5) {
             $delivery = Delivery::find($order->delivery_id);
@@ -120,7 +117,7 @@ class OrderController extends BackEndController
         $order = $this->model::find($id);
         $order->update($request->all());
         if (isset($request->delivery_id)) {
-            // $this->sendToFirebase($request->delivery_id);
+            $this->sendToFirebase($request->delivery_id);
         }
         if ($order->status == 5) {
             $delivery = Delivery::find($order->delivery_id);
