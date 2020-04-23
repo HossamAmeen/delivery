@@ -84,6 +84,7 @@ class OrderController extends BackEndController
     public function store(Request $request)
     {
         $order = $this->model->create($request->all());
+        $this::notificationToClient($order->client_id , $order->id ,  $order->status);
         if (isset($request->delivery_id)) {
             $this->sendToFirebase($request->delivery_id);
         }
@@ -116,6 +117,7 @@ class OrderController extends BackEndController
     {
         $order = $this->model::find($id);
         $order->update($request->all());
+        $this::notificationToClient($order->client_id , $order->id ,  $order->status);
         if (isset($request->delivery_id)) {
             $this->sendToFirebase($request->delivery_id);
         }
