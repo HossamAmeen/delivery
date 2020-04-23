@@ -154,7 +154,7 @@ class ClientController extends Controller
     protected function uploadImages($request, $orderId)
     {
 
-        $photos = $request->file('images');
+        $photos = $request->file('image');
 
         foreach ($photos as $photo) {
             $fileName = time() . str_random('10') . '.' . $photo->getClientOriginalExtension();
