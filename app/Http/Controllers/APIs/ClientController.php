@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\APIs;
 
 use App\Http\Controllers\APIResponseTrait;
+use App\Http\Controllers\Dashboard\OrderController;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Models\Order;
+
 use App\Models\SmsVerfication;
 use Auth;
 use Illuminate\Http\Request;
@@ -133,8 +135,8 @@ class ClientController extends Controller
     {
         $request['client_id'] = Auth::guard('client-api')->user()->id;
         $order = Order::create($request->all());
-
-        if ($request->images) {
+        OrderController::notificationToClient($order->client_id , $order->id ,  $order->status);
+        if ($request->image) {
             $this->uploadImages($request, $order->id);
         }
 
