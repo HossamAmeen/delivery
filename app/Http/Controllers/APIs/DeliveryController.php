@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\APIs;
 use App\Http\Controllers\APIResponseTrait;
+use App\Http\Controllers\Dashboard\OrderController;
 use App\Models\Delivery;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -9,7 +10,7 @@ use App\Http\Controllers\Controller;
 use Auth;
 class DeliveryController extends Controller
 {
-    use APIResponseTrait;
+    use APIResponseTrait ;
     public function login()
     {
         $credentials = request(['phone', 'password']);
@@ -81,6 +82,9 @@ class DeliveryController extends Controller
                     $client->save();
                 }
             }
+        //    $oredercon = new OrderController();
+           return OrderController::notificationToClient($order->client_id , $order->id);
+            return $this->notificationToClient();
             return $this->APIResponse(null, null, 201);
         }
         return $this->APIResponse(null, "not found this order", 201);

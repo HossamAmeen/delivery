@@ -191,6 +191,31 @@ class OrderController extends BackEndController
         //   print_r($newPost->getvalue() );
     }
 
+    static function  notificationToClient($clinetId , $orderID)
+    {
+        // return __DIR__ ;
+        $serviceAccount = ServiceAccount::fromJsonFile(__DIR__ . '/delivery-e3e58-firebase-adminsdk-imo2m-b7f0400810.json');
+        $firebase = (new Factory)
+            ->withServiceAccount($serviceAccount)
+            ->withDatabaseUri('https://delivery-e3e58.firebaseio.com/')
+            ->create();
+
+        $database = $firebase->getDatabase();
+
+
+
+        $reference = $database->getReference('/clients');
+
+        $snapshot = $reference->getSnapshot()->getValue();
+
+        $snapshot[$clinetId] =$orderID;
+        $newPost = $database
+            ->getReference('/clients')
+            ->update($snapshot);
+
+
+    }
+
     public function orderCount()
     {
         $NewOrderCount = Order::where('status',1)->count();
