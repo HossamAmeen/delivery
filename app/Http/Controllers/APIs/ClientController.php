@@ -131,6 +131,7 @@ class ClientController extends Controller
 
     public function addOrder(Request $request)
     {
+        return $request->all() ;
         $request['client_id'] = Auth::guard('client-api')->user()->id;
         $order = Order::create($request->all());
 
