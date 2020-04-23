@@ -80,14 +80,14 @@ class DeliveryController extends Controller
                 {
                     $client->money -= $order->price ;
                     $client->save();
-                    OrderController::notificationToClient($order->client_id , $order->id ,  $order->status);
+
                 }
                 else
                 return $this->APIResponse(null, "this client in not found for this order", 201);
             }
         //    $oredercon = new OrderController();
 
-
+            OrderController::notificationToClient($order->client_id , $order->id ,  $order->status);
             return $this->APIResponse(null, null, 201);
         }
         return $this->APIResponse(null, "not found this order", 201);
