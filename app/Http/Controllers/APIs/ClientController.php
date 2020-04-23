@@ -131,8 +131,6 @@ class ClientController extends Controller
 
     public function addOrder(Request $request)
     {
-        return $request->all() ;
-        return $this->APIResponse( $request->all(), null, 201);
         $request['client_id'] = Auth::guard('client-api')->user()->id;
         $order = Order::create($request->all());
 
@@ -140,7 +138,7 @@ class ClientController extends Controller
             $this->uploadImages($request, $order->id);
         }
 
-        return $this->APIResponse(null, null, 201);
+        return $this->APIResponse( $request->all(), null, 201);
     }
 
     public function addRate(Request $request, $id)
