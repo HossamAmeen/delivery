@@ -200,13 +200,13 @@ class OrderController extends BackEndController
              ->withDatabaseUri('https://delivery-e3e58.firebaseio.com/')
              ->create();
          $database = $firebase->getDatabase();
-         $reference = $database->getReference('/deliveries');
+         $reference = $database->getReference('/clients');
 
          $snapshot = $reference->getSnapshot()->getValue();
 
          $snapshot[1] =9;
          $newPost = $database
-             ->getReference('/deliveries')
+             ->getReference('/clients')
              ->update($snapshot);
     }
 
