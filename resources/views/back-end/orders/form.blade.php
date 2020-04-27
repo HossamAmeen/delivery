@@ -52,7 +52,7 @@
                 selected
                 @endif
                 @endif
-                >{{$delivery->name}} </option>
+                >{{$delivery->name . " ($delivery->status)"  }}  </option>
             @endforeach
         </select>
     </div>

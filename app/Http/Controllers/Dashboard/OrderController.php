@@ -59,7 +59,9 @@ class OrderController extends BackEndController
                 // return  ( $order->delivery_price * $delivery->delivery_ratio )  / 100 ;
                 $delivery->money += ($order->delivery_price * $delivery->delivery_ratio) / 100;
                 // return $delivery->money ;
+                $delivery->status = "متاح";
                 $delivery->save();
+
                 $order->delivery_ratio = ($order->delivery_price * $delivery->delivery_ratio) / 100;
                 $order->save();
                 // return $delivery;
@@ -86,7 +88,13 @@ class OrderController extends BackEndController
         $order = $this->model->create($request->all());
         $this::notificationToClient($order->client_id , $order->id ,1);
         if (isset($request->delivery_id)) {
-            $this->sendToFirebase($request->delivery_id);
+            $delivery = Delivery::find($order->delivery_id);
+            if (isset($delivery)) {
+                $delivery->status = "مشغول";
+                $delivery->save();
+                $this->sendToFirebase($request->delivery_id);
+            }
+
         }
         if ($order->status == 5) {
             $delivery = Delivery::find($order->delivery_id);
@@ -95,6 +103,7 @@ class OrderController extends BackEndController
                 // return  ( $order->delivery_price * $delivery->delivery_ratio )  / 100 ;
                 $delivery->money += ($order->delivery_price * $delivery->delivery_ratio) / 100;
                 // return $delivery->money ;
+                $delivery->status = "متاح";
                 $delivery->save();
                 $order->delivery_ratio = ($order->delivery_price * $delivery->delivery_ratio) / 100;
                 $order->save();
@@ -119,7 +128,25 @@ class OrderController extends BackEndController
         $order->update($request->all());
         $this::notificationToClient($order->client_id , $order->id ,  $order->status);
         if (isset($request->delivery_id)) {
-            $this->sendToFirebase($request->delivery_id);
+                $delivery = Delivery::find($order->delivery_id);
+                if (isset($delivery)) {
+                    $delivery->status = "مشغول";
+                    $delivery->save();
+                    $this->sendToFirebase($request->delivery_id);
+                }
+            // $this->sendToFirebase($request->delivery_id);
+        }
+        else
+        {
+
+                $delivery = Delivery::find($order->delivery_id);
+                if (isset($delivery)) {
+                    $delivery->status = "متاح";
+                    $delivery->save();
+                    $this->sendToFirebase($request->delivery_id);
+                }
+
+
         }
         if ($order->status == 5) {
             $delivery = Delivery::find($order->delivery_id);
@@ -128,6 +155,7 @@ class OrderController extends BackEndController
                 // return  ( $order->delivery_price * $delivery->delivery_ratio )  / 100 ;
                 $delivery->money += ($order->delivery_price * $delivery->delivery_ratio) / 100;
                 // return $delivery->money ;
+                $delivery->status = "متاح";
                 $delivery->save();
                 $order->delivery_ratio = ($order->delivery_price * $delivery->delivery_ratio) / 100;
                 $order->save();
@@ -148,7 +176,7 @@ class OrderController extends BackEndController
 
     public function append()
     {
-        $data['deliveries'] = Delivery::orderBy('id', 'DESC')->get();
+        $data['deliveries'] = Delivery::orderBy('status')->get();
         $data['clients'] = Client::orderBy('id', 'DESC')->get();
 
         return $data;
