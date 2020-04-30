@@ -118,9 +118,9 @@
             </a>
         </li>
 
-        <li class="{{is_active('complaints')}}">
+        <li class="{{is_active('complaints')}} ">
             <a href="{{route('complaints.index')}}"  class="{{is_active('complaints')}}">
-                    <i class="far fa-newspaper"></i><span>الشكاوي</span>
+                    <i class="far fa-newspaper"></i><span >الشكاوي</span> <span class="badge badge-red complaint_count" ></span>
             </a>
 
         </li>

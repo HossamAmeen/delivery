@@ -39,6 +39,8 @@ Route::prefix('admin')->group(function () {
             Route::resource('accounts', 'AccountController');
             Route::resource('dailyaccounts', 'DailyAccountController');
             Route::get('order/count', 'OrderController@orderCount');
+            Route::get('complaint/count', 'ComplaintController@UnReadComplaintCount');
+            Route::get('read/complaint', 'ComplaintController@updateStatusComplaint');     /////////////// change column is_read to 1
 
         });
 

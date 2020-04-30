@@ -355,30 +355,52 @@
     <!--Demo table script end-->
     <script>
         var interval = 6000;  // 1000 = 1 second, 3000 = 3 seconds
-      function order_counter(){
-          var ajax = new XMLHttpRequest();
-          var method = "GET";
-          //URL
-          var url = {!! json_encode(url("admin/order/count")) !!};
-          // console.log(url);
-          var asynchronons = true;
-          ajax.open(method, url, asynchronons);
-          ajax.send();
-          ajax.onreadystatechange = function () {
-              if (this.readyState == 4 && this.status == 200) {
+        function order_counter(){
+            var ajax = new XMLHttpRequest();
+            var method = "GET";
+
+            var url = {!! json_encode(url("admin/order/count")) !!};  //URL
+            // console.log(url);
+            var asynchronons = true;
+            ajax.open(method, url, asynchronons);
+            ajax.send();
+            ajax.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
                   //v is variable that = json respone
-                  var v = JSON.parse(this.responseText);
+                    var v = JSON.parse(this.responseText);
                   // console.log(v);
                   //itemName is key in JSON
-                  $(".order_count").html(v['NewOrderCount']);
-                  $(".order_count").html(v['NewOrderCount'])
-                  console.log(v['NewOrderCount']);
-                  setTimeout(order_counter, interval);
-              }
-          }
-      }
-      // setTimeout(doAjax, interval);
-      setTimeout(order_counter, 1);
+                $(".order_count").html(v['NewOrderCount']);
+
+                console.log(v['NewOrderCount']);
+                setTimeout(order_counter, interval);
+                }
+            }
+        }
+        function complaint_counter(){
+            var ajax = new XMLHttpRequest();
+            var method = "GET";
+
+            var url = {!! json_encode(url("admin/complaint/count")) !!};  //URL
+            // console.log(url);
+            var asynchronons = true;
+            ajax.open(method, url, asynchronons);
+            ajax.send();
+            ajax.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                  //v is variable that = json respone
+                    var v = JSON.parse(this.responseText);
+                  // console.log(v);
+                  //itemName is key in JSON
+                $(".complaint_count").html(v['complaintCount']);
+
+                console.log(v['complaintCount']);
+                setTimeout(complaint_counter, interval);
+                }
+            }
+        }
+        setTimeout(complaint_counter, 1);
+        setTimeout(order_counter, 1);
     </script>
     @stack('js')
 </body>
