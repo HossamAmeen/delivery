@@ -36,6 +36,13 @@ class DeliveryController extends Controller
         return $this->APIResponse($orders, null, 201);
     }
 
+    public function account()
+    {
+        $delivery = Delivery::find( Auth::guard('delivery-api')->user()->id);
+
+
+        return $this->APIResponse($delivery, null, 201);
+    }
     public function lastOrder()
     {
         $orders = Order::latest()

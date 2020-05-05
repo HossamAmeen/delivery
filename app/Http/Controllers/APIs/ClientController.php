@@ -126,6 +126,7 @@ class ClientController extends Controller
     public function showOrders()
     {
         $order = Order::where('client_id', Auth::guard('client-api')->user()->id)
+            ->with('delivery')
             ->get();
 
         return $this->APIResponse($order, null, 201);

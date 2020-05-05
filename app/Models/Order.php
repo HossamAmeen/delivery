@@ -12,7 +12,7 @@ class Order extends Model
 
     function delivery()
     {
-        return $this->belongsTo(Delivery::class);
+        return $this->belongsTo(Delivery::class)->select('id' , 'name' , 'phone');
     }
 
     function client()

@@ -23,7 +23,9 @@ Route::namespace ("APIs")->group(function () {
         Route::get("client/orders", "ClientController@showOrders");
         Route::put("account/update", "ClientController@updateAccount");
     });
+    ///delivery
     Route::post("delivery/login", "DeliveryController@login");
+    Route::get("delivery/account", "DeliveryController@account");
     Route::get("delivery/orders", "DeliveryController@orders");
     Route::get("delivery/last-order", "DeliveryController@lastOrder");
     Route::get("delivery/order-delivered", "DeliveryController@orderDelivered");
