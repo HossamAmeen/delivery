@@ -24,6 +24,7 @@ class BackEndController extends Controller
         $rows = $this->model;
         $rows = $this->filter($rows);
         $with = $this->with();
+        $append = $this->append();
         if(!empty($with)){
             $rows = $rows->with($with);
         }
@@ -31,6 +32,7 @@ class BackEndController extends Controller
         $moduleName = $this->pluralModelName();
         $sModuleName = $this->getModelName();
         $routeName = $this->getClassNameFromModel();
+
         $pageTitle = "Control ".$moduleName;
         $pageDes = "Here you can add / edit / delete " .$moduleName;
         // return $rows;
@@ -38,12 +40,13 @@ class BackEndController extends Controller
 
         return view('back-end.' . $routeName . '.index', compact(
             'rows',
+            
             'pageTitle',
             'moduleName',
             'pageDes',
             'sModuleName',
             'routeName'
-        ));
+        ))->with($append);
     }
 
     public function create()

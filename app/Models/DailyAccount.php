@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class DailyAccount extends Model
 {
-    protected $fillable = ['date','expenses','note'];
+    protected $fillable = ['date','expenses','isReceived','note'];
 
 }

@@ -41,5 +41,25 @@ class DailyAccountController extends BackEndController
       return redirect()->route($this->getClassNameFromModel().'.index');
     }
 
+    public function recievedMoney($id)
+    {
+
+        
+        $dailyAccount =  $this->model::find($id);
+        $dailyAccount->update(['isReceived' => 1]);
+        $account = Account::where('date' , date('Y-m-d'))->first();
+        // return $account->expenses ;
+        $account->expenses  =  $account->expenses + $dailyAccount->expenses ;
+        $account->save();
+      return redirect()->route($this->getClassNameFromModel().'.index');
+    }
+
+    public function append()
+    {
+        $data['account'] = Account::where('date' , date('Y-m-d'))->first();
+        return  $data ; 
+       
+    }
+
 }
 

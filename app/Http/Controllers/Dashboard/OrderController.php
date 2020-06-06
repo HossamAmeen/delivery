@@ -16,7 +16,7 @@ class OrderController extends BackEndController
         $this->model = $model;
     }
 
-    public function show(Request $request)
+    public function show(Request $request  , $delevry_id)
     {
 
         $rows = $this->model;
@@ -25,8 +25,9 @@ class OrderController extends BackEndController
         if (!empty($with)) {
             $rows = $rows->with($with);
         }
-        $status = $request->status;
-        $rows = $rows->orderBy('id', 'DESC')->where('status', $request->status)->get();
+        $delevry = Delivery::findOrFail($delevry_id);
+        $delivery_name = $delevry->name;
+        $rows = $rows->orderBy('id', 'DESC')->where('delivery_id', $delevry_id)->get();
         $moduleName = $this->pluralModelName();
         $sModuleName = $this->getModelName();
         $routeName = $this->getClassNameFromModel();
@@ -36,15 +37,16 @@ class OrderController extends BackEndController
         $pageDes = "Here you can add / edit / delete " . $moduleName;
         // return $rows;
         // return Auth::user()->role;
-
-        return view('back-end.' . $routeName . '.index', compact(
+       
+        return view('back-end.' . $routeName . '.index-for-delivery', compact(
             'rows',
-            'status',
+           
             'pageTitle',
             'moduleName',
             'pageDes',
             'sModuleName',
-            'routeName'
+            'routeName',
+            'delivery_name'
         ));
     }
 

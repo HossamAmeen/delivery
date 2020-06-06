@@ -73,13 +73,13 @@ $pageTitle = "تعديل معاد الحضور والانصراف" ;
             @enderror
         </div>
     </div>
-    
-    @php $input = "is_recieved"; @endphp
+    {{-- daily_money --}}
+    @php $input = "daily_money"; @endphp
     <div class="form-group">
-        <label class="col-lg-2 control-label">تم استلام 10 جنيهات</label>
+        <label class="col-lg-2 control-label">المبلغ المستلم</label>
        
         <div class="col-lg-4">
-            <input type="checkbox" name="{{ $input }}"  class="form-control" checked value="1"
+            <input type="text" name="{{ $input }}"  class="form-control" checked value="1"
                 >
             @error($input)
             <div class="alert alert-danger" role="alert" style="text-align: center">

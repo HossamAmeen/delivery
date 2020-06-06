@@ -5,15 +5,6 @@
 @endsection
 
 @section('content')
-
-    @component('back-end.layout.header')
-        @slot('nav_title')
-        {{$pageTitle}} 
-         <a href="{{ route($routeName.'.create') }}">  
-            <button class="alert-success"> <i class="fa fa-plus"></i> </button>
-         </a>
-        @endslot
-    @endcomponent
     @component('back-end.shared.table' )
                     @if (session()->get('action') )
                         <div class="alert alert-success">
@@ -30,8 +21,9 @@
                              <th>الهاتف</th>
                              <th>العنوان</th>
                              <th>فلوس التوصيل</th>
-                             <th>فلوس اليومية</th>
+                             <th>فلوس المتبقيه</th>
                              <th>خصومات الشهرية</th>
+                             
                                 <th></th>
                             </tr>
                         </thead>
@@ -65,7 +57,21 @@
                                     <td>0</td>
                                     @endif --}}
                                     <td>
-                                     @include('back-end.shared.buttons.delete')
+                                        <form action="{{ route($routeName.'.destroy' , ['id' => $item]) }}" method="post">
+                                            {{ csrf_field() }}
+                                            {{ method_field('delete') }}
+                                            <a href="{{url('admin/orders/'.$item->id)}}" rel="tooltip" title="" class="btn btn-info" data-original-title="Edit {{ $sModuleName }}">
+                                                <i class="material-icons">طلبات اليوم</i>
+                                            </a>
+                                            <a href="{{ route($routeName.'.edit' , ['id' => $item]) }}" rel="tooltip" title="" class="btn btn-info" data-original-title="Edit {{ $sModuleName }}">
+                                                    <i class="material-icons">تعديل</i>
+                                                </a>
+                                            <button type="submit" rel="tooltip" title="" class="btn btn-danger"  onclick="check()" data-original-title="Remove {{ $sModuleName }}">
+                                                <i class="material-icons">حذف</i>
+                                            </button>
+                                        </form>
+                                     {{-- @include('back-end.shared.buttons.delete') --}}
+                                     
                                     </td>
                                 </tr>
                             @endforeach

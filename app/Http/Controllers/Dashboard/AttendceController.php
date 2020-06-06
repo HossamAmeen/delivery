@@ -96,11 +96,15 @@ class AttendceController extends BackEndController
       $item = $this->model::find($id);
       $item->update($request->all());
     //   return $item;
-      if(isset($request->is_recieved))
+    //   if(isset($request->is_recieved))
       {
         $delivery = Delivery::find($request->delivery_id);
-        $delivery->daily_money += 10 ;
-        $delivery->save(); 
+        if(isset($request->daily_money) && is_numeric($request->daily_money))
+        {
+            $delivery->daily_money += $request->daily_money ;
+            $delivery->save(); 
+            
+        }
         
       }
         return redirect()->route($this->getClassNameFromModel().'.index');
