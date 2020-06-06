@@ -60,7 +60,7 @@
                                         <form action="{{ route($routeName.'.destroy' , ['id' => $item]) }}" method="post">
                                             {{ csrf_field() }}
                                             {{ method_field('delete') }}
-                                            <a href="{{url('admin/orders/'.$item->id)}}" rel="tooltip" title="" class="btn btn-info" data-original-title="Edit {{ $sModuleName }}">
+                                            <a href="{{url('admin/show-orders-delivery/'.$item->id)}}" rel="tooltip" title="" class="btn btn-info" data-original-title="Edit {{ $sModuleName }}">
                                                 <i class="material-icons">طلبات اليوم</i>
                                             </a>
                                             <a href="{{ route($routeName.'.edit' , ['id' => $item]) }}" rel="tooltip" title="" class="btn btn-info" data-original-title="Edit {{ $sModuleName }}">

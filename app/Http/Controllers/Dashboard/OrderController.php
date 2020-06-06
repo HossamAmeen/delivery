@@ -25,6 +25,38 @@ class OrderController extends BackEndController
         if (!empty($with)) {
             $rows = $rows->with($with);
         }
+        $status = $request->status;
+        $rows = $rows->orderBy('id', 'DESC')->where('status', $request->status)->get();
+        $moduleName = $this->pluralModelName();
+        $sModuleName = $this->getModelName();
+        $routeName = $this->getClassNameFromModel();
+
+
+        $pageTitle = "";
+        $pageDes = "Here you can add / edit / delete " . $moduleName;
+        // return $rows;
+        // return Auth::user()->role;
+       
+        return view('back-end.' . $routeName . '.index', compact(
+            'rows',
+           'status',
+            'pageTitle',
+            'moduleName',
+            'pageDes',
+            'sModuleName',
+            'routeName',
+            
+        ));
+    }
+
+    public function showOrderWithDelivery(Request $request  , $delevry_id)
+    {
+        $rows = $this->model;
+        $rows = $this->filter($rows);
+        $with = $this->with();
+        if (!empty($with)) {
+            $rows = $rows->with($with);
+        }
         $delevry = Delivery::findOrFail($delevry_id);
         $delivery_name = $delevry->name;
         $rows = $rows->orderBy('id', 'DESC')->where('delivery_id', $delevry_id)->get();
@@ -49,7 +81,6 @@ class OrderController extends BackEndController
             'delivery_name'
         ));
     }
-
     public function changeStatus($status, $orderId, $deliveryId = null)
     {
         $order = Order::find($orderId);
