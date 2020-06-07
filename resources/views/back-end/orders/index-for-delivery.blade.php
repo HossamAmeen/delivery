@@ -6,14 +6,14 @@
 
 @section('content')
 
-@component('back-end.layout.header')
+{{-- @component('back-end.layout.header')
 @slot('nav_title')
 {{$pageTitle}}
 <a href="{{ route($routeName.'.create') }}">
     <button class="alert-success"> <i class="fa fa-plus"></i> </button>
 </a>
 @endslot
-@endcomponent
+@endcomponent --}}
 @component('back-end.shared.table' )
 @if (session()->get('action') )
 <div class="alert alert-success">
