@@ -6,14 +6,12 @@
 
 @section('content')
 
-{{-- @component('back-end.layout.header')
+@component('back-end.layout.header')
 @slot('nav_title')
 {{$pageTitle}}
-<a href="{{ route($routeName.'.create') }}">
-    <button class="alert-success"> <i class="fa fa-plus"></i> </button>
-</a>
+
 @endslot
-@endcomponent --}}
+@endcomponent
 @component('back-end.shared.table' )
 @if (session()->get('action') )
 <div class="alert alert-success">
@@ -91,31 +89,7 @@
             <td>لا يوجد</td>
             @endif
             <td> {{$item->updated_at }}</td>
-            <td>
-                {{-- <form action="{{ route($routeName.'.destroy' , ['id' => $item]) }}" method="post">
-                    {{ csrf_field() }}
-                    {{ method_field('delete') }}
-                    @if($status < 4 ) <a href="{{ url('admin/change-status-order/'. ($status + 1).'/'.$item->id) }}"
-                        rel="tooltip" title="" class="btn btn-info" data-original-title="Edit {{ $sModuleName }}">
-                        <i class="material-icons">تم</i>
-                        </a>
-                        @elseif(isset($item->delivery) && $status == 4)
-                        <a href="{{ url('admin/change-status-order/'. ($status + 1).'/'.$item->id.'/'.$item->delivery->id) }}"
-                            rel="tooltip" title="" class="btn btn-info" data-original-title="Edit {{ $sModuleName }}">
-                            <i class="material-icons">تم</i>
-                        </a>
-
-                        @endif
-                        <a href="{{ route($routeName.'.edit' , ['id' => $item]) }}" rel="tooltip" title=""
-                            class="btn btn-info" data-original-title="Edit {{ $sModuleName }}">
-                            <i class="material-icons">تعديل</i>
-                        </a>
-                        <button type="submit" rel="tooltip" title="" class="btn btn-danger" onclick="check()"
-                            data-original-title="Remove {{ $sModuleName }}">
-                            <i class="material-icons">حذف</i>
-                        </button>
-                </form> --}}
-            </td>
+          
         </tr>
         @endforeach
     </tbody>

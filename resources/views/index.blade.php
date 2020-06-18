@@ -50,7 +50,7 @@
                     <h5>دليفري المدينة أسيوط © 2020</h5>
                 </div>
                 <div class="col-sm-6 social-icons"><a href="https://www.facebook.com/Deliveryasyut/">
-                    <i class="fa fa-facebook"></i></a><a href="https://wa.me/01020631113"><i class="fa fa-whatsapp"></i></a></div>
+                    <i class="fa fa-facebook"></i></a><a href="https://wa.me/‭201026311133‬"><i class="fa fa-whatsapp"></i></a></div>
             </div>                                                         
         </div>
     </footer>

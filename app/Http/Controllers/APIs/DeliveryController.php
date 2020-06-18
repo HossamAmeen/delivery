@@ -36,6 +36,7 @@ class DeliveryController extends Controller
         return $this->APIResponse($orders, null, 201);
     }
 
+
     public function account()
     {
         $delivery = Delivery::find( Auth::guard('delivery-api')->user()->id);
@@ -69,29 +70,33 @@ class DeliveryController extends Controller
 
         if(isset($order)){
 
-            $order->status = 5;
+            $order->status = request('status');
             $order->save();
 
-            $delivery = Delivery::find($order->delivery_id);
-            if(isset($delivery))
-            {
-                // return  ( $order->delivery_price * $delivery->delivery_ratio )  / 100 ;
-                $delivery->money += ( $order->delivery_price * $delivery->delivery_ratio )  / 100 ;
-                // return $delivery->money ;
-                $delivery->save();
-                // return $delivery;
-            }
-            if($order->price < 0 ){
-                $client = Client::find($order->client_id);
-                if(isset($client))
+            if($order->status == 5 ){
+                $delivery = Delivery::find($order->delivery_id);
+                if(isset($delivery))
                 {
-                    $client->money -= $order->price ;
-                    $client->save();
-
+                    // return  ( $order->delivery_price * $delivery->delivery_ratio )  / 100 ;
+                    $delivery->money += ( $order->delivery_price * $delivery->delivery_ratio )  / 100 ;
+                    // return $delivery->money ;
+                    $delivery->save();
+                    // return $delivery;
                 }
-                else
-                return $this->APIResponse(null, "this client in not found for this order", 201);
+                if($order->price < 0 ){
+                    $client = Client::find($order->client_id);
+                    if(isset($client))
+                    {
+                        $client->money -= $order->price ;
+                        $client->save();
+    
+                    }
+                    else
+                    return $this->APIResponse(null, "this client in not found for this order", 201);
+                }
             }
+           
+            
         //    $oredercon = new OrderController();
 
             OrderController::notificationToClient($order->client_id , $order->id ,  5);
