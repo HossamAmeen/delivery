@@ -269,7 +269,7 @@ class OrderController extends BackEndController
 
         //  $snapshot[$clinetId] ="$orderstatus". '-'."$orderID";
         $order =  Order::find($orderID);
-         $snapshot[$clinetId] = $orderstatus."-".$orderID."-".$order->delivery->name ?? "لا يوجد";//"$orderstatus'-'$orderID"; $order->delivery->name   "$orderstatus-$orderID"
+         $snapshot[$clinetId] = $orderstatus."-".$orderID."-".$order->delivery ? $order->delivery->name : "لا يوجد";//"$orderstatus'-'$orderID"; $order->delivery->name   "$orderstatus-$orderID"
          $newPost = $database
              ->getReference('/clients')
              ->update($snapshot);
