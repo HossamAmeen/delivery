@@ -112,7 +112,14 @@ class OrderController extends BackEndController
     }
     public function destroy($id)
     {
-        $this->model->FindOrFail($id)->delete();
+        $order = $this->model->FindOrFail($id);
+        $delivery = Delivery::find($order->delivery_id);
+        if (isset($delivery)) {
+            $delivery->status = "مشغول";
+            $delivery->save();
+            $this->sendToFirebase($request->delivery_id);
+        }
+        $order ->delete();
         session()->flash('action', 'تم الحذف بنجاح');
         return redirect()->back();
     }
