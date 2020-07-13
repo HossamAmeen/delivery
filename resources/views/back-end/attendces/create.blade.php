@@ -103,8 +103,8 @@
 @endpush
 @push('js')
 <script>
-    console.log("test");
-        document.getElementById('date').valueAsDate = new Date();
+   
+        
 </script>
 <!--Upload button Script Start-->
 <script src="{{asset('panel/assets/js/fileinput.min.js')}}"></script>

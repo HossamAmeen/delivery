@@ -14,13 +14,14 @@
 
         @component('back-end.shared.create')
             <form id="defaultForm" method="post" class="form-horizontal ls_form" action="{{ route($routeName.'.store') }}"
-                data-bv-message="This value is not valid"
-                data-bv-feedbackicons-valid="fa fa-check"
-                data-bv-feedbackicons-invalid="fa fa-bug"
-                data-bv-feedbackicons-validating="fa fa-refresh"
                 enctype="multipart/form-data"
                 >  
                 @csrf
+                @if($errors->any())
+                    <div class="alert alert-danger" role="alert" style="text-align: center">
+                        <h4>{{$errors->first()}}</h4>
+                    </div>
+                @endif
                 @include('back-end.'.$folderName.'.form')  
                 <div class="form-group">
                         <div class="col-lg-9 col-lg-offset-3">
@@ -43,9 +44,14 @@
     <link rel="stylesheet" href="{{asset('panel/assets/css/rtl-css/plugins/fileinput-rtl.css')}}">
 @endpush
 @push('js')
-    <script>
-       console.log("test");
-        document.getElementById('date').valueAsDate = new Date();
+    <script>   
+      
+        function getValue(element){
+            var str = element.value;
+            element.value = str.substring(str.indexOf('$')+1 );            
+            $("#"+element.name+'_id').val(str.substring( str.indexOf('$') ,-1 ))
+        }
+
     </script>
      <!--Upload button Script Start-->
    <script src="{{asset('panel/assets/js/fileinput.min.js')}}"></script>

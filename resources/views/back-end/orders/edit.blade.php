@@ -22,6 +22,12 @@ $pageTitle = "تعديل طلب" ;
     data-bv-feedbackicons-valid="fa fa-check" data-bv-feedbackicons-invalid="fa fa-bug"
     data-bv-feedbackicons-validating="fa fa-refresh" enctype="multipart/form-data">
     @csrf
+    @if($errors->any())
+        
+        <div class="alert alert-danger" role="alert" style="text-align: center">
+            <h4>{{$errors->first()}}</h4>
+        </div>
+    @endif
     {{method_field('PUT')}}
     @include('back-end.'.$folderName.'.form')
     @if (isset($row->images))
@@ -49,7 +55,7 @@ $pageTitle = "تعديل طلب" ;
 
     <div class="form-group">
         <div class="col-lg-9 col-lg-offset-3">
-            <button type="submit" class="btn btn-primary" onclick="myFunction()">تعديل</button>
+            <button type="submit" class="btn btn-primary" onclick="checkValueOfClient()">تعديل</button>
         </div>
     </div>
 </form>
@@ -68,6 +74,15 @@ $pageTitle = "تعديل طلب" ;
 <link rel="stylesheet" href="{{asset('panel/assets/css/rtl-css/plugins/fileinput-rtl.css')}}">
 @endpush
 @push('js')
+
+<script>
+    function getValue(element){
+        var str = element.value;
+        element.value = str.substring(str.indexOf('$')+1 );            
+        $("#"+element.name+'_id').val(str.substring( str.indexOf('$') ,-1 ))
+    }
+
+</script>
 <!--Upload button Script Start-->
 <script src="{{asset('panel/assets/js/fileinput.min.js')}}"></script>
 <!--Upload button Script End-->

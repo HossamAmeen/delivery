@@ -30,31 +30,39 @@
 <div class="form-group">
     <label class="col-md-2 control-label">عميل</label>
     <div class="col-md-4">
-        <select name="{{ $input }}" class="form-control" required>
-            @foreach ($clients as $client)
-            <option value="{{$client->id}}" @if(isset($row)) @if( $row->client_id == $client->id )
-                selected
-                @endif
-                @endif
-                >{{$client->name}} </option>
-            @endforeach
-        </select>
+        {{-- <input  name="test" placeholder="Start typing..."> --}}
+        <input type="text" list="clients" name="client"  @if(isset($row)) value="{{$row->client->name??'لا يوجد'}}" @else id="client"
+            value="{{Request::old($input)}}" @endif class="form-control" required onchange="getValue(this)" >
+            <input type="hidden" name="{{ $input }}" id="{{ $input }}" value="{{$row->$input??-1}}" >
+        {{-- <select name="{{ $input }}" class="form-control" required>
+        @foreach ($clients as $client)
+        <option value="{{$client->id}}" @if(isset($row)) @if( $row->client_id == $client->id )
+            selected
+            @endif
+            @endif
+            >{{$client->name}} </option>
+        @endforeach
+        </select> --}}
     </div>
 </div>
 @php $input = "delivery_id"; @endphp
 <div class="form-group">
     <label class="col-md-2 control-label">موظف التوصيل </label>
     <div class="col-md-4">
-        <select name="{{ $input }}" class="form-control">
-            <option value="{{null}}"></option>
-            @foreach ($deliveries as $delivery)
-            <option value="{{$delivery->id}}" @if(isset($row)) @if( $row->delivery_id == $delivery->id )
-                selected
-                @endif
-                @endif
-                >{{$delivery->name . " ($delivery->status)"  }}  </option>
-            @endforeach
-        </select>
+        <input type="text" list="deliveries" name="delivery"  @if(isset($row)) value="{{$row->delivery->name??'لا يوجد'}}" @else
+            value="{{Request::old($input)}}" @endif class="form-control" onchange="getValue(this)" >
+            <input type="hidden" name="{{ $input }}" id="{{ $input }}" value="{{$row->$input??null}}">
+            {{-- <input type="hidden" name="{{ $input }}" value=""> --}}
+        {{-- <select name="{{ $input }}" class="form-control">
+        <option value="{{null}}"></option>
+        @foreach ($deliveries as $delivery)
+        <option value="{{$delivery->id}}" @if(isset($row)) @if( $row->delivery_id == $delivery->id )
+            selected
+            @endif
+            @endif
+            >{{$delivery->name . " ($delivery->status)"  }} </option>
+        @endforeach
+        </select> --}}
     </div>
 </div>
 @php $input = "status"; @endphp
@@ -151,3 +159,40 @@
 </div>
 
 
+
+<datalist id="clients">
+    @foreach ($clients as $client)
+        <option  value="{{$client->id.'$'.$client->name}}">{{$client->name}}</option>
+    @endforeach
+</datalist>
+
+<datalist id="deliveries">
+    @foreach ($deliveries as $delivery)
+    <option value="{{$delivery->id.'$'.$delivery->name}}">{{$delivery->name}}</option>
+    @endforeach
+</datalist>
+
+
+@push('js')
+
+<script>
+    function checkValueOfClient(){
+        console.log(" client id = " + $("#client_id").val());
+        client_id =$("#client_id").val() ; // typeof 
+       if(client_id  < 0 )
+       {
+        $("form").submit(function(e){
+                alert('يجب اختيار عميل ');
+                e.preventDefault(e);
+            });
+       }
+      
+           
+        //  $("form").submit(function(e){
+        //         alert('يجب اختيار عميل ');
+        //         e.preventDefault(e);
+        //     });
+    }
+
+</script>
+@endpush

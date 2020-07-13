@@ -125,6 +125,10 @@ class OrderController extends BackEndController
     }
     public function store(Request $request)
     {
+        if( $request->client_id == null){
+            return back()->withErrors(['يجب اختيار عميل ']);
+        } 
+        // return $request->all();
         $order = $this->model->create($request->all());
         $this::notificationToClient($order->client_id , $order->id ,1);
         if (isset($request->delivery_id)) {
@@ -164,6 +168,9 @@ class OrderController extends BackEndController
 
     public function update(Request $request, $id)
     {
+        if( $request->client_id == null){
+            return back()->withErrors(['يجب اختيار عميل ']);
+        } 
         $order = $this->model::find($id);
         $order->update($request->all());
         $this::notificationToClient($order->client_id , $order->id ,  $order->status);
