@@ -20,7 +20,7 @@ $pageTitle = "تعديل طلب" ;
 <form id="defaultForm" method="post" class="form-horizontal ls_form"
     action="{{ route($routeName.'.update' , ['id' => $row]) }}" data-bv-message="This value is not valid"
     data-bv-feedbackicons-valid="fa fa-check" data-bv-feedbackicons-invalid="fa fa-bug"
-    data-bv-feedbackicons-validating="fa fa-refresh" enctype="multipart/form-data">
+    data-bv-feedbackicons-validating="fa fa-refresh" enctype="multipart/form-data" autocomplete="off">
     @csrf
     @if($errors->any())
         

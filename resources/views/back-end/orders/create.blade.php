@@ -14,7 +14,7 @@
 
         @component('back-end.shared.create')
             <form id="defaultForm" method="post" class="form-horizontal ls_form" action="{{ route($routeName.'.store') }}"
-                enctype="multipart/form-data"
+                enctype="multipart/form-data" autocomplete="off"
                 >  
                 @csrf
                 @if($errors->any())
