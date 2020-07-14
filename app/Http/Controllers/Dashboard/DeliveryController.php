@@ -16,7 +16,7 @@ class DeliveryController extends BackEndController
     public function store(Request $request){
         //    return $request->all();
 
-            $rules = $this->contactFormValidation();
+            $rules = $this->FormValidation();
             $message = $this->MessageValidation();
             $this->validate($request, $rules, $message);
 
@@ -41,7 +41,7 @@ class DeliveryController extends BackEndController
         public function update($id , Request $request){
 
 
-            $rules = $this->contactFormValidation();
+            $rules = $this->FormValidation();
             $message = $this->MessageValidation();
             $this->validate($request, $rules, $message);
             $row = $this->model->FindOrFail($id);
