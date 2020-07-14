@@ -16,6 +16,10 @@ class DeliveryController extends BackEndController
     public function store(Request $request){
         //    return $request->all();
 
+            $rules = $this->contactFormValidation();
+            $message = $this->MessageValidation();
+            $this->validate($request, $rules, $message);
+
             $requestArray = $request->all();
             if(isset($requestArray['password']) )
             $requestArray['password'] =  Hash::make($requestArray['password']);
@@ -37,7 +41,9 @@ class DeliveryController extends BackEndController
         public function update($id , Request $request){
 
 
-
+            $rules = $this->contactFormValidation();
+            $message = $this->MessageValidation();
+            $this->validate($request, $rules, $message);
             $row = $this->model->FindOrFail($id);
             $requestArray = $request->all();
             if(isset($requestArray['password']) && $requestArray['password'] != ""){
@@ -58,5 +64,25 @@ class DeliveryController extends BackEndController
 
             session()->flash('action', 'تم التحديث بنجاح');
             return redirect()->route($this->getClassNameFromModel().'.index');
+        }
+        public function FormValidation()
+        {
+                return array(
+                    'delivery_ratio' => 'numeric',
+                    'deduction' => 'numeric',
+                    'daily_money' => 'numeric',
+                    'money' => 'numeric',
+                );
+        }
+        public function MessageValidation()
+        {
+           
+            return array(
+                
+                'delivery_ratio.numeric' => 'يجب ان يكون رقما فقط',    
+                'deduction.numeric' => 'يجب ان يكون رقما فقط',    
+                'daily_money.numeric' => 'يجب ان يكون رقما فقط',    
+                'money.numeric' => 'يجب ان يكون رقما فقط',    
+            );
         }
 }
