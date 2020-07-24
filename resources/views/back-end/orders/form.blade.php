@@ -168,7 +168,7 @@
 
 <datalist id="deliveries">
     @foreach ($deliveries as $delivery)
-    <option value="{{$delivery->id.'$'.$delivery->name}}">{{$delivery->name ." ". $delivery->status}}</option>
+    <option value="{{$delivery->id.'$'.$delivery->name}}">{{$delivery->name ." (". $delivery->status . ")"}}</option>
     @endforeach
 </datalist>
 
