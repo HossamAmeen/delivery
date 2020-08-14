@@ -86,6 +86,7 @@ class OrderController extends BackEndController
         $order = Order::find($orderId);
         $order->status = $status;
         $order->save();
+        $this::notificationToClient($order->client_id , $order->id ,  $order->status);
         if ($status == 5) {
             $delivery = Delivery::find($order->delivery_id);
             if (isset($delivery)) {
@@ -110,14 +111,14 @@ class OrderController extends BackEndController
         }
         return redirect()->back();
     }
-    public function destroy($id)
+    public function destroy( $id)
     {
         $order = $this->model->FindOrFail($id);
         $delivery = Delivery::find($order->delivery_id);
         if (isset($delivery)) {
             $delivery->status = "مشغول";
             $delivery->save();
-            $this->sendToFirebase($request->delivery_id);
+            $this->sendToFirebase($order->delivery_id);
         }
         $order ->delete();
         session()->flash('action', 'تم الحذف بنجاح');
@@ -283,7 +284,7 @@ class OrderController extends BackEndController
 
         //  $snapshot[$clinetId] ="$orderstatus". '-'."$orderID";
          $order =  Order::find($orderID);
-         $snapshot[$clinetId] = $orderstatus."-".$orderID."-".$order->delivery ??  "لا يوجد" ."-".$order->delivery_price;//"$orderstatus'-'$orderID"; $order->delivery->name   "$orderstatus-$orderID"
+         $snapshot[$clinetId] = $orderstatus."-".$orderID."-".$order->delivery->name ??  "لا يوجد" ."-".$order->delivery_price;//"$orderstatus'-'$orderID"; $order->delivery->name   "$orderstatus-$orderID"
          $newPost = $database
              ->getReference('/clients')
              ->update($snapshot);

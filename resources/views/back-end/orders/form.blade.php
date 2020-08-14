@@ -162,7 +162,7 @@
 
 <datalist id="clients">
     @foreach ($clients as $client)
-        <option  value="{{$client->id.'$'.$client->name}}">{{$client->name}}</option>
+        <option  value="{{$client->id.'$'.$client->name}}"></option>
     @endforeach
 </datalist>
 
