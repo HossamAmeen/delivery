@@ -208,6 +208,7 @@ class OrderController extends BackEndController
                 $order->delivery_ratio = ($order->delivery_price * $delivery->delivery_ratio) / 100;
                 $order->save();
                 // return $delivery;
+                $this->sendToFirebase($request->delivery_id , 0);
             }
             if ($order->price < 0) {
                 $client = Client::find($order->client_id);
@@ -230,7 +231,7 @@ class OrderController extends BackEndController
         return $data;
     }
 
-    public function sendToFirebase($deliveryId)
+    public function sendToFirebase($deliveryId , $status = 1 )
     {
         // return __DIR__ ;
         $serviceAccount = ServiceAccount::fromJsonFile(__DIR__ . '/delivery-e3e58-firebase-adminsdk-imo2m-b7f0400810.json');
@@ -253,7 +254,7 @@ class OrderController extends BackEndController
         // return  $database->getReference('/deliveries')->getChildKeys();
 
         // $database->getReference('deliveries')->remove();
-        $snapshot[$deliveryId] = 1;
+        $snapshot[$deliveryId] = $status;
         $newPost = $database
             ->getReference('/deliveries')
             ->update($snapshot);
