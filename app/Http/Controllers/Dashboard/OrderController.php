@@ -175,10 +175,12 @@ class OrderController extends BackEndController
         } 
         $order = $this->model::find($id);
         if($order->delivery_id != $request->delivery_id){
+            // return "test";
             $this::notificationToClient($order->client_id , $order->id ,  $order->status );
         }
         elseif($order->status != $request->status)
         {
+            // return "test2";
             $this::notificationToClient($order->client_id , $order->id ,  $order->status , true);
         }
         $order->update($request->all());
