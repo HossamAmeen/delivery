@@ -286,9 +286,8 @@ class OrderController extends BackEndController
         //  $snapshot[$clinetId] ="$orderstatus". '-'."$orderID";
          $order =  Order::find($orderID);
          $snapshot[$clinetId] = $orderstatus."-".$orderID."-".$order->delivery->name ??  "لا يوجد" ."-".$order->delivery_price;//"$orderstatus'-'$orderID"; $order->delivery->name   "$orderstatus-$orderID"
-         $newPost = $database
-             ->getReference('/clients')
-             ->update($snapshot);
+         $newPost = $database->getReference('/clients')
+                             ->update($snapshot);
     }
 
     public function orderCount()

@@ -136,7 +136,7 @@ class ClientController extends Controller
     {
         $request['client_id'] = Auth::guard('client-api')->user()->id;
         $order = Order::create($request->all());
-
+        // return $order->delivery->name ??  "لا يوجد" ; 
         OrderController::notificationToClient($order->client_id , $order->id ,1);
         if ($request->image) {
             $this->uploadImages($request, $order->id);

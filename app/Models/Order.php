@@ -12,7 +12,7 @@ class Order extends Model
 
     function delivery()
     {
-        return $this->belongsTo(Delivery::class)->select('id' , 'name' , 'phone');
+        return $this->belongsTo(Delivery::class)->select('id' , 'name' , 'phone')->withDefault(['name'=>'لا يوجد ' ]);
     }
 
     function client()
