@@ -270,7 +270,7 @@ class OrderController extends BackEndController
         //   print_r($newPost->getvalue() );
     }
 
-    static function  notificationToClient($clinetId , $orderID , $orderstatus)
+    static function  notificationToClient($clinetId , $orderID , $orderstatus , $changeStatus = false)
     {
          // return __DIR__ ;
          $serviceAccount = ServiceAccount::fromJsonFile(__DIR__ . '/delivery-e3e58-firebase-adminsdk-imo2m-b7f0400810.json');
@@ -285,7 +285,13 @@ class OrderController extends BackEndController
 
         //  $snapshot[$clinetId] ="$orderstatus". '-'."$orderID";
          $order =  Order::find($orderID);
-         $snapshot[$clinetId] = $orderstatus."-".$orderID."-".$order->delivery->name ??  "لا يوجد" ."-".$order->delivery_price;//"$orderstatus'-'$orderID"; $order->delivery->name   "$orderstatus-$orderID"
+         if($changeStatus == true){
+            $snapshot[$clinetId] = $orderstatus."-".$orderID."-";
+          }
+        else
+         {
+            $snapshot[$clinetId] = $orderstatus."-".$orderID."-".$order->delivery->name ??  "";
+         }
          $newPost = $database->getReference('/clients')
                              ->update($snapshot);
     }
