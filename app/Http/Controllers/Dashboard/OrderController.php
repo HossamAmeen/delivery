@@ -169,10 +169,18 @@ class OrderController extends BackEndController
 
     public function update(Request $request, $id)
     {
+        // return "test";
         if( $request->client_id == null){
             return back()->withErrors(['يجب اختيار عميل ']);
         } 
         $order = $this->model::find($id);
+        if($order->delivery_id != $request->delivery_id){
+            $this::notificationToClient($order->client_id , $order->id ,  $order->status );
+        }
+        elseif($order->status != $request->status)
+        {
+            $this::notificationToClient($order->client_id , $order->id ,  $order->status , true);
+        }
         $order->update($request->all());
         
         if (isset($request->delivery_id)) {
@@ -182,7 +190,7 @@ class OrderController extends BackEndController
                     $delivery->save();
                     $this->sendToFirebase($request->delivery_id);
                 }
-                $this::notificationToClient($order->client_id , $order->id ,  $order->status );
+                // 
             // $this->sendToFirebase($request->delivery_id);
         }
         else
@@ -194,7 +202,7 @@ class OrderController extends BackEndController
                     $delivery->save();
                     $this->sendToFirebase($request->delivery_id);
                 }
-                $this::notificationToClient($order->client_id , $order->id ,  $order->status , true);
+                // $this::notificationToClient($order->client_id , $order->id ,  $order->status , true);
 
         }
         if ($order->status == 5) {
