@@ -86,7 +86,7 @@ class OrderController extends BackEndController
         $order = Order::find($orderId);
         $order->status = $status;
         $order->save();
-        $this::notificationToClient($order->client_id , $order->id ,  $order->status);
+        $this::notificationToClient($order->client_id , $order->id ,  $order->status , true);
         if ($status == 5) {
             $delivery = Delivery::find($order->delivery_id);
             if (isset($delivery)) {
@@ -174,7 +174,7 @@ class OrderController extends BackEndController
         } 
         $order = $this->model::find($id);
         $order->update($request->all());
-        $this::notificationToClient($order->client_id , $order->id ,  $order->status);
+        
         if (isset($request->delivery_id)) {
                 $delivery = Delivery::find($order->delivery_id);
                 if (isset($delivery)) {
@@ -182,6 +182,7 @@ class OrderController extends BackEndController
                     $delivery->save();
                     $this->sendToFirebase($request->delivery_id);
                 }
+                $this::notificationToClient($order->client_id , $order->id ,  $order->status );
             // $this->sendToFirebase($request->delivery_id);
         }
         else
@@ -193,7 +194,7 @@ class OrderController extends BackEndController
                     $delivery->save();
                     $this->sendToFirebase($request->delivery_id);
                 }
-
+                $this::notificationToClient($order->client_id , $order->id ,  $order->status , true);
 
         }
         if ($order->status == 5) {
