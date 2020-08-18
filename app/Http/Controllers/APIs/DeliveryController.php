@@ -99,7 +99,7 @@ class DeliveryController extends Controller
             
         //    $oredercon = new OrderController();
 
-            OrderController::notificationToClient($order->client_id , $order->id ,  5 , true);
+            OrderController::notificationToClient($order->client_id , $order->id ,  $order->status , true);
             return $this->APIResponse(null, null, 201);
         }
         return $this->APIResponse(null, "not found this order", 201);
