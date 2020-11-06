@@ -12,7 +12,6 @@
  */
 
 // Route::get('/', 'Dashboard\ConfigrationController@index');
-
 Route::prefix('admin')->group(function () {
     Auth::routes();
     Route::namespace ('Dashboard')->group(function () {

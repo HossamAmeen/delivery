@@ -16,7 +16,7 @@ class ClientController extends BackEndController
 
     public function store(Request $request){
         //    return $request->all();
-           
+
             $requestArray = $request->all();
             if(isset($requestArray['password']) )
             $requestArray['password'] =  Hash::make($requestArray['password']);
@@ -25,20 +25,20 @@ class ClientController extends BackEndController
                 $fileName = $this->uploadImage($request );
                 $requestArray['image'] =  $fileName;
             }
-           
+
             $requestArray['user_id'] = Auth::user()->id;
             $this->model->create($requestArray);
             session()->flash('action', 'تم الاضافه بنجاح');
-           
-          
-     
+
+
+
             return redirect()->route($this->getClassNameFromModel().'.index');
         }
-    
+
         public function update($id , Request $request){
-    
-            
-           
+
+
+
             $row = $this->model->FindOrFail($id);
             $requestArray = $request->all();
             if(isset($requestArray['password']) && $requestArray['password'] != ""){
@@ -54,12 +54,12 @@ class ClientController extends BackEndController
             if(!isset($requestArray['is_block']) ) {
                 $requestArray['is_block'] = 0 ;
             }
-            
+
             $requestArray['user_id'] = Auth::user()->id;
             $row->update($requestArray);
-    
-            
-      
+
+
+
             session()->flash('action', 'تم التحديث بنجاح');
             return redirect()->route($this->getClassNameFromModel().'.index');
         }

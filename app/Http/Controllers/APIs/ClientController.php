@@ -20,33 +20,44 @@ class ClientController extends Controller
     // public function register(ClientRequest $request)
     public function register(Request $request)
     {
-        // if (isset($request->validator) && $request->validator->fails())
-        // {
-        //     return $this->APIResponse(null , $request->validator->messages() ,  400);
-        // }
-        // return $request->password;
-        // auth()->login($client);
+        \DB::beginTransaction();
 
-        /////////////// check token
         $smsVerfication = SmsVerfication::where('contact_number', $request->phone)->latest()->first();
         if ($smsVerfication != null) {
             if ($smsVerfication->token != $request->token) {
                 return $this->APIResponse(null, 'token not verify', 400);
             }
-
-        } else {
-            // return $this->APIResponse(null, 'phone not found', 400);
         }
 
         if (isset($request->password)) {
             $request['password'] = bcrypt($request->password);
         }
-
         $client = Client::create($request->all());
+
         $success['token'] = $client->createToken('token')->accessToken;
+        $smsCode = rand(10000,100000);
+        $clientRequest = new \GuzzleHttp\Client();
+        $requestData = [
+            "username"=> env('SMSEG_USERNAME'),
+            "password"=> env('SMSEG_PASSWORD'),
+            "sendername"=> env('SMSEG_SENDERNAME'),
+            "mobiles"=> "2" . $client->phone,
+            "message"=> $smsCode
+        ];
+        $response = $clientRequest->post('https://smssmartegypt.com/sms/api/json/', ['json' => $requestData]);
+        $responseData = json_decode($response->getBody(), true);
+        if(isset($responseData[0])){
+            $smsVerfication = SmsVerfication::create([
+                'contact_number' => $client->phone,
+                'code' => $smsCode]);
+            \DB::commit();
+        }
+        else{
+            \DB::rollBack();
+            return $this->APIResponse("User can't create", null, 400);
+        }
         // $smsVerfication->delete();
         return $this->APIResponse($success, null, 200);
-
     }
 
     public function login(Request $request)
@@ -54,8 +65,10 @@ class ClientController extends Controller
         $field = 'phone';
 
         if (is_numeric($request->input('phone'))) {
+            $filterField = $request->input('phone');
             $field = 'phone';
         } elseif (filter_var($request->input('phone'), FILTER_VALIDATE_EMAIL)) {
+            $filterField = filter_var($request->input('phone'), FILTER_VALIDATE_EMAIL);
             $field = 'email';
         }
 
@@ -65,8 +78,10 @@ class ClientController extends Controller
             $error = "Unauthorized";
             return $this->APIResponse(null, $error, 400);
         }
-        $client = Client::where($field, request('phone'))->first();
-
+        $client = Client::where($field, $filterField)->first();
+        $clientCheck = SmsVerfication::where('contact_number', $client->phone)->where('status', 'verified')->first();
+        if(empty($clientCheck))
+            return $this->APIResponse("This user doesn't verified", null, 400);
         $success['token'] = $client->createToken('token')->accessToken;
         return $this->APIResponse($success, null, 200);
 
@@ -136,7 +151,7 @@ class ClientController extends Controller
     {
         $request['client_id'] = Auth::guard('client-api')->user()->id;
         $order = Order::create($request->all());
-        // return $order->delivery->name ??  "لا يوجد" ; 
+        // return $order->delivery->name ??  "لا يوجد" ;
         OrderController::notificationToClient($order->client_id , $order->id ,1);
         if ($request->image) {
             $this->uploadImages($request, $order->id);

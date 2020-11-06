@@ -44,32 +44,57 @@ class SmsController extends Controller
         // request('phone')
         $smsVerifcation = SmsVerfication::where('contact_number', '=',
             $request->contact_number)->latest()->first(); //show the latest if there are multiple
-        
+
         if ($smsVerifcation != null )
         {
             if ( $request->code == $smsVerifcation->code) {
 
                 $smsVerifcation = SmsVerfication::where('contact_number', '=',
                     $request->contact_number)->where('created_at', '>=', Carbon::now()->subMinutes(15)->toDateTimeString())->latest()->first();
-    
+
                 if (isset($smsVerifcation)) {
                     $request["status"] = 'verified';
                     $client = new Client();
                 //   return   $client->createToken('token')->accessToken;
-                $request['token'] = $client->createToken('token')->accessToken ; 
+                    $request['token'] = $client->createToken('token')->accessToken ;
                     $smsVerifcation->update($request->all());
                     return $this->APIResponse( $request['token'], null, 201);
                 } else {
-                    return $this->APIResponse(null, "code is expired", 400);
+                    \DB::beginTransaction();
+                    $client = Client::where('phone', $request->contact_number)->first();
+                    SmsVerfication::where('contact_number', $request->contact_number)->delete();
+                    $token = $client->createToken('token')->accessToken;
+                    $smsCode = rand(10000,100000);
+                    $clientRequest = new \GuzzleHttp\Client();
+                    $requestData = [
+                        "username"=> env('SMSEG_USERNAME'),
+                        "password"=> env('SMSEG_PASSWORD'),
+                        "sendername"=> env('SMSEG_SENDERNAME'),
+                        "mobiles"=> "2" . $client->phone,
+                        "message"=> $smsCode
+                    ];
+                    $response = $clientRequest->post('https://smssmartegypt.com/sms/api/json/', ['json' => $requestData]);
+                    $responseData = json_decode($response->getBody(), true);
+                    if(isset($responseData[0])){
+                        $smsVerfication = SmsVerfication::create([
+                            'contact_number' => $client->phone,
+                            'code' => $smsCode]);
+                        \DB::commit();
+                    }
+                    else{
+                        \DB::rollBack();
+                        return $this->APIResponse("User can't create", null, 400);
+                    }
+                    return $this->APIResponse($token, "This code is expired, please confirm new code", 400);
                 }
             } else {
                 return $this->APIResponse(null, "not verified", 400);
             }
         }
         else
-            {
-                return $this->APIResponse(null, "not founded", 400);
-            }
+        {
+            return $this->APIResponse(null, "not founded", 400);
+        }
     }
     public function sendMessageToPhone($phone)
     {
