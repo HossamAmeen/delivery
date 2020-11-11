@@ -22,18 +22,21 @@ class ClientController extends Controller
     {
         \DB::beginTransaction();
 
-        $smsVerfication = SmsVerfication::where('contact_number', $request->phone)->latest()->first();
-        if ($smsVerfication != null) {
-            if ($smsVerfication->token != $request->token) {
-                return $this->APIResponse(null, 'token not verify', 400);
+        $client = Client::where('phone', $request->phone)->latest()->first();
+        if($client){
+            $smsVerfication = SmsVerfication::where('contact_number', $request->phone)->latest()->first();
+            if($smsVerfication){
+                if($smsVerfication->status == 'verified')
+                    return $this->APIResponse(null, 'This account already exist.', 400);
+                $smsVerfication->delete();
             }
         }
-
-        if (isset($request->password)) {
-            $request['password'] = bcrypt($request->password);
+        else{
+            if (isset($request->password)) {
+                $request['password'] = bcrypt($request->password);
+            }
+            $client = Client::create($request->all());
         }
-        $client = Client::create($request->all());
-
         $success['token'] = $client->createToken('token')->accessToken;
         $smsCode = rand(10000,100000);
         $clientRequest = new \GuzzleHttp\Client();
@@ -134,7 +137,12 @@ class ClientController extends Controller
     }
     public function updateAccount(Request $request)
     {
-        Client::find(Auth::guard('client-api')->user()->id)->update($request->all());
+        $client = Client::find(Auth::guard('client-api')->user()->id);
+        $request->merge([
+            'phone' => $client->phone,
+            'phone2' => $client->phone2
+            ]);
+        $client->update($request->all());
         return $this->APIResponse(null, null, 201);
 
     }

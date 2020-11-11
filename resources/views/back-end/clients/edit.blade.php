@@ -2,7 +2,7 @@
 @php
 
     $pageTitle = "تعديل عميل" ;
- @endphp  
+ @endphp
 @section('title')
     {{ $pageTitle }}
 @endsection
@@ -12,7 +12,7 @@
     @component('back-end.layout.header')
         @slot('nav_title')
             {{ $pageTitle }}
-           
+
         @endslot
     @endcomponent
 
@@ -23,10 +23,10 @@
                     data-bv-feedbackicons-invalid="fa fa-bug"
                     data-bv-feedbackicons-validating="fa fa-refresh"
                     enctype="multipart/form-data"
-                    >  
+                    >
                     @csrf
                     {{method_field('PUT')}}
-                    @include('back-end.'.$folderName.'.form')    
+                    @include('back-end.'.$folderName.'.form')
                     @php $input = "is_block"; @endphp
 <div class="form-group">
     <label class="col-lg-3 control-label"> محظور</label>
@@ -38,14 +38,14 @@
         </span>
         @enderror
     </div>
-</div> 
+</div>
                 <div class="form-group">
                         <div class="col-lg-9 col-lg-offset-3">
                             <button type="submit" class="btn btn-primary" onclick="myFunction()">تعديل</button>
                         </div>
                     </div>
-            </form>  
-        @endcomponent                    
+            </form>
+        @endcomponent
 @endsection
 @push('css')
       <!-- Responsive Style For-->
@@ -56,7 +56,7 @@
 
 
     <!-- Plugin Css Put Here -->
-  
+
     <link rel="stylesheet" href="{{asset('panel/assets/css/rtl-css/plugins/fileinput-rtl.css')}}">
 @endpush
 @push('js')

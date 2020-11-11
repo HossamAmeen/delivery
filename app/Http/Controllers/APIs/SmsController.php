@@ -42,25 +42,26 @@ class SmsController extends Controller
     public function verifyContact(Request $request)
     {
         // request('phone')
-        $smsVerifcation = SmsVerfication::where('contact_number', '=',
+        $smsVerification = SmsVerfication::where('contact_number', '=',
             $request->contact_number)->latest()->first(); //show the latest if there are multiple
 
-        if ($smsVerifcation != null )
+        if ($smsVerification != null )
         {
-            if ( $request->code == $smsVerifcation->code) {
+            if ( $request->code == $smsVerification->code) {
 
-                $smsVerifcation = SmsVerfication::where('contact_number', '=',
+                $smsVerifyed = SmsVerfication::where('contact_number', '=',
                     $request->contact_number)->where('created_at', '>=', Carbon::now()->subMinutes(15)->toDateTimeString())->latest()->first();
 
-                if (isset($smsVerifcation)) {
+                if (isset($smsVerifyed)) {
                     $request["status"] = 'verified';
                     $client = new Client();
                 //   return   $client->createToken('token')->accessToken;
                     $request['token'] = $client->createToken('token')->accessToken ;
-                    $smsVerifcation->update($request->all());
+                    $smsVerifyed->update($request->all());
                     return $this->APIResponse( $request['token'], null, 201);
                 } else {
                     \DB::beginTransaction();
+                    $smsVerification->delete();
                     $client = Client::where('phone', $request->contact_number)->first();
                     SmsVerfication::where('contact_number', $request->contact_number)->delete();
                     $token = $client->createToken('token')->accessToken;
