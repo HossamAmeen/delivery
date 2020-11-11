@@ -30,6 +30,12 @@ class ClientController extends Controller
                     return $this->APIResponse(null, 'This account already exist.', 400);
                 $smsVerfication->delete();
             }
+            elseif($client->user_id){
+                if (isset($request->password)) {
+                    $request['password'] = bcrypt($request->password);
+                }
+                $client->update($request->all());
+            }
         }
         else{
             if (isset($request->password)) {
@@ -82,9 +88,12 @@ class ClientController extends Controller
             return $this->APIResponse(null, $error, 400);
         }
         $client = Client::where($field, $filterField)->first();
-        $clientCheck = SmsVerfication::where('contact_number', $client->phone)->where('status', 'verified')->first();
-        if(empty($clientCheck))
-            return $this->APIResponse("This user doesn't verified", null, 400);
+        if($client->created_at > "2020-11-11")
+        {
+            $clientCheck = SmsVerfication::where('contact_number', $client->phone)->where('status', 'verified')->first();
+            if(empty($clientCheck))
+                return $this->APIResponse("This user doesn't verified", null, 400);
+        }
         $success['token'] = $client->createToken('token')->accessToken;
         return $this->APIResponse($success, null, 200);
 
