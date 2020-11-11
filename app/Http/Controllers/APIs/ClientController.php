@@ -7,6 +7,7 @@ use App\Http\Controllers\Dashboard\OrderController;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Models\Order;
+use App\Models\TempClient;
 
 use App\Models\SmsVerfication;
 use Auth;
@@ -21,29 +22,28 @@ class ClientController extends Controller
     public function register(Request $request)
     {
         \DB::beginTransaction();
-
         $client = Client::where('phone', $request->phone)->latest()->first();
         if($client){
-            $smsVerfication = SmsVerfication::where('contact_number', $request->phone)->latest()->first();
-            if($smsVerfication){
-                if($smsVerfication->status == 'verified')
-                    return $this->APIResponse(null, 'This account already exist.', 400);
-                $smsVerfication->delete();
-            }
-            elseif($client->user_id){
+            if($client->user_id){
                 if (isset($request->password)) {
                     $request['password'] = bcrypt($request->password);
                 }
                 $client->update($request->all());
             }
+            else
+                return $this->APIResponse(null, 'This account already exist.', 400);
         }
         else{
-            if (isset($request->password)) {
-                $request['password'] = bcrypt($request->password);
+            $tempClient = TempClient::where('phone', $request->phone)->latest()->first();
+            if(empty($tempClient)){
+                if (isset($request->password)) {
+                    $request['password'] = bcrypt($request->password);
+                }
+                $client = TempClient::create($request->all());
             }
-            $client = Client::create($request->all());
+            else
+                $client = $tempClient;
         }
-        $success['token'] = $client->createToken('token')->accessToken;
         $smsCode = rand(10000,100000);
         $clientRequest = new \GuzzleHttp\Client();
         $requestData = [
@@ -56,6 +56,7 @@ class ClientController extends Controller
         $response = $clientRequest->post('https://smssmartegypt.com/sms/api/json/', ['json' => $requestData]);
         $responseData = json_decode($response->getBody(), true);
         if(isset($responseData[0])){
+            SmsVerfication::where('contact_number', $client->phone)->delete();
             $smsVerfication = SmsVerfication::create([
                 'contact_number' => $client->phone,
                 'code' => $smsCode]);
@@ -65,8 +66,67 @@ class ClientController extends Controller
             \DB::rollBack();
             return $this->APIResponse("User can't create", null, 400);
         }
-        // $smsVerfication->delete();
-        return $this->APIResponse($success, null, 200);
+        return $this->APIResponse("Please check your phone messages.", null, 200);
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // \DB::beginTransaction();
+
+        // $client = Client::where('phone', $request->phone)->latest()->first();
+        // if($client){
+        //     $smsVerfication = SmsVerfication::where('contact_number', $request->phone)->latest()->first();
+        //     if($smsVerfication){
+        //         if($smsVerfication->status == 'verified')
+        //             return $this->APIResponse(null, 'This account already exist.', 400);
+        //         $smsVerfication->delete();
+        //     }
+        //     elseif($client->user_id){
+        //         if (isset($request->password)) {
+        //             $request['password'] = bcrypt($request->password);
+        //         }
+        //         $client->update($request->all());
+        //     }
+        // }
+        // else{
+        //     if (isset($request->password)) {
+        //         $request['password'] = bcrypt($request->password);
+        //     }
+        //     $client = Client::create($request->all());
+        // }
+        // $success['token'] = $client->createToken('token')->accessToken;
+        // $smsCode = rand(10000,100000);
+        // $clientRequest = new \GuzzleHttp\Client();
+        // $requestData = [
+        //     "username"=> env('SMSEG_USERNAME'),
+        //     "password"=> env('SMSEG_PASSWORD'),
+        //     "sendername"=> env('SMSEG_SENDERNAME'),
+        //     "mobiles"=> "2" . $client->phone,
+        //     "message"=> $smsCode
+        // ];
+        // $response = $clientRequest->post('https://smssmartegypt.com/sms/api/json/', ['json' => $requestData]);
+        // $responseData = json_decode($response->getBody(), true);
+        // if(isset($responseData[0])){
+        //     $smsVerfication = SmsVerfication::create([
+        //         'contact_number' => $client->phone,
+        //         'code' => $smsCode]);
+        //     \DB::commit();
+        // }
+        // else{
+        //     \DB::rollBack();
+        //     return $this->APIResponse("User can't create", null, 400);
+        // }
+        // // $smsVerfication->delete();
+        // return $this->APIResponse($success, null, 200);
     }
 
     public function login(Request $request)

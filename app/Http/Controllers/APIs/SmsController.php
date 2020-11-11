@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\SMSProvider;
 use App\Models\SmsVerfication;
 use App\Models\Client;
+use App\Models\TempClient;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -41,7 +42,6 @@ class SmsController extends Controller
     }
     public function verifyContact(Request $request)
     {
-        // request('phone')
         $smsVerification = SmsVerfication::where('contact_number', '=',
             $request->contact_number)->latest()->first(); //show the latest if there are multiple
 
@@ -53,10 +53,11 @@ class SmsController extends Controller
                     $request->contact_number)->where('created_at', '>=', Carbon::now()->subMinutes(15)->toDateTimeString())->latest()->first();
 
                 if (isset($smsVerifyed)) {
+                    $tempClient = TempClient::where('phone', $request->contact_number)->first();
+                    $client = Client::create($tempClient->toArray());
+                    $tempClient->delete();
+                    $request['token'] = $client->createToken('token')->accessToken;
                     $request["status"] = 'verified';
-                    $client = new Client();
-                //   return   $client->createToken('token')->accessToken;
-                    $request['token'] = $client->createToken('token')->accessToken ;
                     $smsVerifyed->update($request->all());
                     return $this->APIResponse( $request['token'], null, 201);
                 } else {
