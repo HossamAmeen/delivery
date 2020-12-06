@@ -15,13 +15,12 @@ class DeliveryController extends Controller
     {
         $credentials = request(['phone', 'password']);
 
-        if(!Auth::guard('delivery')->attempt($credentials, false, false)){
+        if(!Auth::guard('delivery')->attempt($credentials)){
             $error = "Unauthorized";
             return $this->APIResponse(null, $error, 400);
         }
         $delivery = Delivery::where("phone", request('phone'))->first();
         auth()->login($delivery);
-      //  return Auth::guard('client')->user()->id;
         $success['token'] =  $delivery->createToken('token')->accessToken;
         return $this->APIResponse($success, null, 200);
     }
@@ -89,14 +88,14 @@ class DeliveryController extends Controller
                     {
                         $client->money -= $order->price ;
                         $client->save();
-    
+
                     }
                     else
                     return $this->APIResponse(null, "this client in not found for this order", 201);
                 }
             }
-           
-            
+
+
         //    $oredercon = new OrderController();
 
             OrderController::notificationToClient($order->client_id , $order->id ,  $order->status , true);

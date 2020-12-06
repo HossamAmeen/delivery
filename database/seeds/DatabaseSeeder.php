@@ -11,11 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        
+
         App\Models\Country::create(
             [
                 'name' => 'مصر',
-               
+
             ]
         );
         App\Models\City::create(
@@ -32,50 +32,50 @@ class DatabaseSeeder extends Seeder
                 'is_avaible' => 1
             ]
         );
-        
-     
+
+
         $this->call([
             UserSeeder::class,
         //    ClientSeeder::class,
         ]);
-     
+
         factory('App\Models\Configration',1)->create();
         factory('App\Models\User', 10)->create();
 
         factory('App\Models\Complaint', 10)->create();
-       
+
         App\Models\Client::create(
             [
                 'name' => 'hossam' ,
                  'email'=>"hossam@gmail.com" ,
                   'password' =>bcrypt('admin'),
                   'phone' => "01010079798" ,
-                 'address' => "assuit", 
+                 'address' => "assuit",
                  'city_id' => 1
             ]
         );
-        
+
         App\Models\Delivery::create(
             [
                 'name' => 'hossam' ,
                  'email'=>"hossam@gmail.com" ,
                   'password' =>bcrypt('admin'),
                   'phone' => "01010079798" ,
-                 'address' => "assuit", 
+                 'address' => "assuit",
                  'attendance' => "10:00",
                  'departure' => "17:00",
-               
+
             ]
         );
-      
+
         App\Models\Order::create(
             [
                 'title' => 'ديلفري' ,
-               
+
                   'phone' => "01010079798" ,
-                 'address' => "assuit", 
+                 'address' => "assuit",
                  'client_id' => 1 ,
-                 'delivery_id' => 1 , 
+                 'delivery_id' => 1 ,
                  'price' => 5,
                  'delivery_price' => 100,
                  'status' => 1,
@@ -83,15 +83,15 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-          
+
         App\Models\Order::create(
             [
                 'title' => 'ديلفري' ,
-                
+
                   'phone' => "01010079798" ,
-                 'address' => "assuit", 
+                 'address' => "assuit",
                  'client_id' => 1 ,
-                 'delivery_id' => 1 , 
+                 'delivery_id' => 1 ,
                  'price' => -5,
                  'delivery_price' => 10,
                  'status' => 4,

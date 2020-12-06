@@ -23,8 +23,8 @@ class Delivery extends Authenticatable
     //     'departure' => 'hh:mm',
     //     'begin' => 'hh:mm',
     // ];
-    
-  
+
+
     public function setAttendanceAttribute($value)
     {
 
@@ -38,13 +38,13 @@ class Delivery extends Authenticatable
     public function getAttendanceAttribute($value)
     {
         return date("H:i", strtotime($value) );
-      
+
     }
 
     public function getDepartureAttribute($value)
     {
         return date("H:i", strtotime($value) );
-      
+
     }
     public function sanctions()
     {
@@ -54,5 +54,5 @@ class Delivery extends Authenticatable
     {
         return   Sanction::where('delivery_id' , $this->id)->whereMonth('date' , now())->sum('deduction');
     }
-    
+
 }
