@@ -1,5 +1,5 @@
 @extends('back-end.layout.app')
-@php $pageTitle = "إضافه عميل " @endphp  
+@php $pageTitle = "إضافه عميل " @endphp
 @section('title')
     {{ $pageTitle }}
 @endsection
@@ -13,16 +13,21 @@
     @endcomponent
 
         @component('back-end.shared.create')
+            @if (session()->get('action') )
+                <div class="alert alert-danger">
+                    <strong>{{session()->get('action')}}</strong>
+                </div>
+            @endif
             <form id="defaultForm" method="post" class="form-horizontal ls_form" action="{{ route($routeName.'.store') }}"
                 data-bv-message="This value is not valid"
                 data-bv-feedbackicons-valid="fa fa-check"
                 data-bv-feedbackicons-invalid="fa fa-bug"
                 data-bv-feedbackicons-validating="fa fa-refresh"
                 enctype="multipart/form-data"
-                >  
+                >
                 @csrf
-                @include('back-end.'.$folderName.'.form')  
-                
+                @include('back-end.'.$folderName.'.form')
+
 @php $input = "is_block"; @endphp
 <div class="form-group">
     <label class="col-lg-3 control-label"> محظور</label>
@@ -40,8 +45,8 @@
                             <button type="submit" class="btn btn-primary" onclick="myFunction()">إضافة</button>
                         </div>
                     </div>
-            </form>  
-        @endcomponent    
+            </form>
+        @endcomponent
 @endsection
 @push('css')
       <!-- Responsive Style For-->
@@ -52,13 +57,13 @@
 
 
     <!-- Plugin Css Put Here -->
-  
+
     <link rel="stylesheet" href="{{asset('panel/assets/css/rtl-css/plugins/fileinput-rtl.css')}}">
 @endpush
 @push('js')
     <script>
-      
-        
+
+
     </script>
      <!--Upload button Script Start-->
    <script src="{{asset('panel/assets/js/fileinput.min.js')}}"></script>
