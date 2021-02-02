@@ -41,7 +41,7 @@
         <tr>
             <td> {{$row_num++}}</td>
             <td>{{$item->date}}</td>
-            <td>{{$item->expenses}}</td>
+            <td>{{$item->expenses ?? 0 }}</td>
             @if(isset($item->note))
             <td>{{$item->note}}</td>
             @else 
@@ -72,7 +72,7 @@
     <tfoot>
         <tr>
           <td>حساب اليوم</td>
-          <td>{{$account->expenses}}</td>
+          <td>{{$account->expenses ?? 0}}</td>
         </tr>
       </tfoot>
     

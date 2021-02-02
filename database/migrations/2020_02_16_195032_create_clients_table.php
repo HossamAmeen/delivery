@@ -26,6 +26,7 @@ class CreateClientsTable extends Migration
             $table->integer('money')->default(0);
             $table->string('job')->nullable();
             $table->boolean('is_block')->default(0);
+            $table->boolean('is_verified')->default(0);
             $table->string('block_reason')->nullable()->default("he is not good");
 
             $table->bigInteger('city_id')->unsigned()->nullable();

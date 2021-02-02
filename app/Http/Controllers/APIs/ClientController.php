@@ -20,24 +20,16 @@ class ClientController extends Controller
     // public function register(ClientRequest $request)
     public function register(Request $request)
     {
-        // if (isset($request->validator) && $request->validator->fails())
-        // {
-        //     return $this->APIResponse(null , $request->validator->messages() ,  400);
-        // }
-        // return $request->password;
-        // auth()->login($client);
-
-        /////////////// check token
-        $smsVerfication = SmsVerfication::where('contact_number', $request->phone)->latest()->first();
-        if ($smsVerfication != null) {
-            if ($smsVerfication->token != $request->token) {
-                return $this->APIResponse(null, 'token not verify', 400);
-            }
-
-        } else {
-            // return $this->APIResponse(null, 'phone not found', 400);
+        $client = Client::where('phone' ,request('phone'))->first();
+        if($client){
+            return $this->APIResponse(null, 'هذا الرقم مسجل من قبل', 400);
         }
-
+        $client = Client::where('email' ,request('email'))->first();
+        if($client){
+            return $this->APIResponse(null, 'هذا البريد مسجل من قبل', 400);
+        }
+        
+        $this->sendMessage(request('phone'));
         if (isset($request->password)) {
             $request['password'] = bcrypt($request->password);
         }
@@ -176,6 +168,19 @@ class ClientController extends Controller
                 'image' => 'uploads/orders/' . $fileName,
                 'order_id' => $orderId,
             ]);
+        }
+    }
+
+    public function sendSMSCode($phone)
+    {
+        $smsVerifcation = SmsVerfication::where('contact_number', '=',
+        $request->contact_number)->where('created_at', '>=', Carbon::now()->subMinutes($this->duraion)->toDateTimeString())->latest()->first();
+
+        if ($smsVerifcation != null) {
+            return $this->APIResponse(null, "the code has been sent", 400);
+        } else {
+            $smsVerifcation = SmsVerfication::where('contact_number', '=', $request->contact_number);
+            $smsVerifcation->delete();
         }
     }
 

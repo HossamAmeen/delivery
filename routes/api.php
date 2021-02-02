@@ -15,6 +15,7 @@ Route::namespace ("APIs")->group(function () {
     Route::post("client/login-gmail", "ClientController@loginWithGmail");
     Route::post('client/send-sms', 'SmsController@sendMessage');
     Route::post('client/verify-client', 'SmsController@verifyContact');
+    
     Route::middleware('auth:client-api')->group(function () {
         Route::get("account", "ClientController@getAccount");
         Route::put("account/update", "ClientController@updateAccount");
