@@ -26,14 +26,18 @@
     </div>
 
 </div>
+
+
+
 @php $input = "client_id"; @endphp
 <div class="form-group">
     <label class="col-md-2 control-label">عميل</label>
     <div class="col-md-4">
         {{-- <input  name="test" placeholder="Start typing..."> --}}
         <input type="text" list="clients" name="client"  @if(isset($row)) value="{{$row->client->name??'لا يوجد'}}" @else id="client"
-            value="{{Request::old($input)}}" @endif class="form-control" required onchange="getValue(this)" >
-            <input type="hidden" name="{{ $input }}" id="{{ $input }}" value="{{$row->$input??-1}}" >
+            value="{{Request::old($input)}}" @endif class="form-control"  onchange="getValue(this)" >
+
+            <input type="hidden" name="{{ $input }}" id="{{ $input }}" value="{{$row->$input??null}}" >
         {{-- <select name="{{ $input }}" class="form-control" required>
         @foreach ($clients as $client)
         <option value="{{$client->id}}" @if(isset($row)) @if( $row->client_id == $client->id )
@@ -51,6 +55,7 @@
     <div class="col-md-4">
         <input type="text" list="deliveries" name="delivery"  @if(isset($row)) value="{{$row->delivery->name??'لا يوجد'}}" @else
             value="{{Request::old($input)}}" @endif class="form-control" onchange="getValue(this)" >
+
             <input type="hidden" name="{{ $input }}" id="{{ $input }}" value="{{$row->$input??null}}">
             {{-- <input type="hidden" name="{{ $input }}" value=""> --}}
         {{-- <select name="{{ $input }}" class="form-control">
@@ -65,6 +70,35 @@
         </select> --}}
     </div>
 </div>
+
+@php $input = "client_name"; @endphp
+<div class="form-group">
+    <label class="col-lg-2 control-label"> اسم العميل</label>
+    <div class="col-lg-4">
+        <input type="text" name="{{ $input }}" @if(isset($row)) value="{{$row->$input}}" @else
+            value="{{Request::old($input)}}" @endif class="form-control">
+        @error($input)
+        <div class="alert alert-danger" role="alert" style="text-align: center">
+            <strong>{{ $message }}</strong>
+        </div>
+        @enderror
+    </div>
+</div>
+
+{{-- @php $input = "new_client_phone"; @endphp
+<div class="form-group">
+    <label class="col-lg-2 control-label"> رقم العميل</label>
+    <div class="col-lg-4">
+        <input type="text" name="{{ $input }}" @if(isset($row)) value="{{$row->$input}}" @else
+            value="{{Request::old($input)}}" @endif class="form-control">
+        @error($input)
+        <div class="alert alert-danger" role="alert" style="text-align: center">
+            <strong>{{ $message }}</strong>
+        </div>
+        @enderror
+    </div>
+</div> --}}
+
 @php $input = "status"; @endphp
 <div class="form-group">
     <label class="col-md-2 control-label">حالة</label>
@@ -168,7 +202,7 @@
 
 <datalist id="deliveries">
     @foreach ($deliveries as $delivery)
-    <option value="{{$delivery->id.'$'.$delivery->name}}">{{" (". $delivery->status . ")"}}</option>
+    <option value="{{$delivery->id.'$'.$delivery->name}}">{{" (".$delivery->name. $delivery->status . ")"}}</option>
     @endforeach
 </datalist>
 

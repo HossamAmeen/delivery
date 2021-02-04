@@ -47,6 +47,8 @@
 
             @if(isset($item->client))
             <td>{{$item->client->name}}</td>
+            @elseif($item->client_name)
+            <td>{{$item->client_name}}</td>
             @else
             <td>لا يوجد</td>
             @endif

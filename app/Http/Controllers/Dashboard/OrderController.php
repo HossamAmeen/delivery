@@ -86,7 +86,9 @@ class OrderController extends BackEndController
         $order = Order::find($orderId);
         $order->status = $status;
         $order->save();
+        if( $order->client_id != null){
         $this::notificationToClient($order->client_id , $order->id ,  $order->status , true);
+        }
         if ($status == 5) {
             $delivery = Delivery::find($order->delivery_id);
             if (isset($delivery)) {
@@ -126,12 +128,17 @@ class OrderController extends BackEndController
     }
     public function store(Request $request)
     {
-        if( $request->client_id == null){
-            return back()->withErrors(['يجب اختيار عميل ']);
-        } 
-        // return $request->all();
+        // if( $request->client_id == null){
+        //     return back()->withErrors(['يجب اختيار عميل ']);
+        // } 
+     
         $order = $this->model->create($request->all());
-        $this::notificationToClient($order->client_id , $order->id ,1);
+        if( $request->client_id == null){
+            $this::notificationToClient($order->client_name , $order->id ,1);
+            } 
+        else{
+            $this::notificationToClient($order->client_id , $order->id ,1);
+        }
         if (isset($request->delivery_id)) {
             $delivery = Delivery::find($order->delivery_id);
             if (isset($delivery)) {
@@ -163,6 +170,7 @@ class OrderController extends BackEndController
             }
 
         }
+       
         return redirect()->route("show-orders", $order->status);
         return redirect()->route($this->getClassNameFromModel() . '.index');
     }
@@ -170,9 +178,9 @@ class OrderController extends BackEndController
     public function update(Request $request, $id)
     {
         $isDeliveryChange= false;$isStatusChange= false;
-        if( $request->client_id == null){
-            return back()->withErrors(['يجب اختيار عميل ']);
-        } 
+        // if( $request->client_id == null){
+        //     return back()->withErrors(['يجب اختيار عميل ']);
+        // } 
         $order = $this->model::find($id);
         if(isset($request->delivery_id) && $order->delivery_id == null){
             // return "test";
@@ -184,16 +192,20 @@ class OrderController extends BackEndController
             $isStatusChange = true;
             // $this::notificationToClient($order->client_id , $order->id ,  $request->status , true);
         }
-        else{
-            return "test2";
-        }
+        
         $order->update($request->all());
         if($isDeliveryChange == true){
-            $this::notificationToClient($order->client_id , $order->id ,  $request->status );
+            if( $request->client_id != null){
+                $this::notificationToClient($order->client_id , $order->id ,  $request->status );
+                } 
+           
+           
         }
         elseif($isStatusChange==true)
         {
+            if( $request->client_id != null){
               $this::notificationToClient($order->client_id , $order->id ,  $request->status , true );
+            }
         }
         if (isset($request->delivery_id)) {
                 $delivery = Delivery::find($order->delivery_id);
